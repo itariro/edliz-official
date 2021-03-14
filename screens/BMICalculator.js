@@ -10,56 +10,50 @@ const { width } = Dimensions.get("screen");
 
 class BMICalculator extends React.Component {
   state = {
-    "switch-1": true,
-    "switch-2": false
+    height: 0,
+    mass: 0,
+    resultNumber: 0,
+    resultText: "",
   };
 
-  toggleSwitch = switchId =>
-    this.setState({ [switchId]: !this.state[switchId] });
+  handleCalculate = () => {
+    let imc = (this.state.mass * 703) / this.state.height ** 2;
+    this.setState({
+      resultNumber: imc.toFixed(2),
+    });
+
+    if (imc < 18.5) {
+      this.setState({ resultText: "Underweight" });
+    } else if (imc > 18.5 && imc < 25) {
+      this.setState({ resultText: "Normal Weight" });
+    } else if (imc >= 25 && imc < 30) {
+      this.setState({ resultText: "Overweight" });
+    } else {
+      this.setState({ resultText: "Obesity" });
+    }
+  };
 
   renderText = () => {
     return (
       <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Typography
-        </Text>
+
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Text
-            h2
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
+            h1
+            style={{ marginBottom: theme.SIZES.BASE / 2, textAlign: "center", marginTop: 120 }}
             color={argonTheme.COLORS.DEFAULT}
           >
-            Heading 2
+            {this.state.resultNumber}
           </Text>
-          <Text
-            h3
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 3
-          </Text>
-          <Text
-            h4
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 4
-          </Text>
-          <Text
-            h5
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 5
-          </Text>
+
           <Text
             p
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
+            style={{ marginBottom: theme.SIZES.BASE / 2, textAlign: "center" }}
             color={argonTheme.COLORS.DEFAULT}
           >
-            Use this tool to find and identify potentially harmful and unsafe combinations of prescription medications.
+            {this.state.resultText}
           </Text>
-          <Text muted>This is a muted paragraph.</Text>
+          <Text muted>BMI (body mass index) is a measure of whether you are a healthy weight for your height. Use this BMI calculator to check the adults in your family.</Text>
         </Block>
       </Block>
     );
@@ -69,15 +63,30 @@ class BMICalculator extends React.Component {
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>
-          Inputs
+          Height (metres)
         </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input right placeholder="Weight in kgs" iconContent={<Block />} />
-        </Block>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Input
             right
             placeholder="Height in metres"
+            keyboardType="numeric"
+            style={styles.input}
+            onChangeText={(height) => {
+              this.setState({ height });
+            }} iconContent={<Block />} />
+        </Block>
+        <Text bold size={16} style={styles.title}>
+          Weight/mass (kg)
+        </Text>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="Weight/Mass in kgs"
+            keyboardType="numeric"
+            style={styles.input}
+            onChangeText={(mass) => {
+              this.setState({ mass });
+            }}
             style={{
               borderColor: argonTheme.COLORS.INFO,
               borderRadius: 4,
@@ -87,9 +96,7 @@ class BMICalculator extends React.Component {
           />
         </Block>
         <Block center>
-          <Button color="default" style={styles.button}>
-            DEFAULT
-            </Button>
+          <Button bold size={16} color="default" style={styles.button} onPress={this.handleCalculate}>Calculate</Button>
         </Block>
       </Block>
     );
@@ -109,8 +116,8 @@ class BMICalculator extends React.Component {
 
 const styles = StyleSheet.create({
   title: {
-    paddingBottom: theme.SIZES.BASE,
-    paddingHorizontal: theme.SIZES.BASE * 2,
+    paddingBottom: 4,
+    paddingHorizontal: theme.SIZES.BASE * 1,
     marginTop: 44,
     color: argonTheme.COLORS.HEADER
   },
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: theme.SIZES.BASE,
-    width: width - theme.SIZES.BASE * 2
+    width: width - theme.SIZES.BASE * 2,
   },
   optionsButton: {
     width: "auto",
@@ -154,12 +161,6 @@ const styles = StyleSheet.create({
   },
   inputDanger: {
     borderBottomColor: argonTheme.COLORS.ERROR
-  },
-  social: {
-    width: theme.SIZES.BASE * 3.5,
-    height: theme.SIZES.BASE * 3.5,
-    borderRadius: theme.SIZES.BASE * 1.75,
-    justifyContent: "center"
   },
 });
 

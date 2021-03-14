@@ -93,9 +93,9 @@ class MedicineDetail extends React.Component {
 
       "<h4>Pregnancy</h4>" + decodeURIComponent(this.state.content.medicine.pregnancy.replace(/\+/g, "%20")) +
       "<h4>Adverse Effects</h4>" + decodeURIComponent(this.state.content.medicine.adverse_effects.replace(/\+/g, "%20")) +
-      "<h4>Warnings Blackbox</h4>" + decodeURIComponent(this.state.content.medicine.warnings_black_box.replace(/\+/g, "%20")) +
-      "<h4>Warnings Contraindications</h4>" + decodeURIComponent(this.state.content.medicine.warnings_contraindications.replace(/\+/g, "%20")) +
-      "<h4> Cautions</h4>" + decodeURIComponent(this.state.content.medicine.warnings_cautions.replace(/\+/g, "%20")) +
+      "<h4>Blackbox</h4>" + decodeURIComponent(this.state.content.medicine.warnings_black_box.replace(/\+/g, "%20")) +
+      "<h4>Contraindications</h4>" + decodeURIComponent(this.state.content.medicine.warnings_contraindications.replace(/\+/g, "%20")) +
+      "<h4>Cautions</h4>" + decodeURIComponent(this.state.content.medicine.warnings_cautions.replace(/\+/g, "%20")) +
 
       '</div>' +
       '</div>';

@@ -12,7 +12,7 @@ const { width } = Dimensions.get('screen');
 let menuItem = [
   { 'id': 0, 'title': 'Publications', 'description': '', 'navigateTo': 'Publications' },
   { 'id': 1, 'title': 'Approved Suppliers', 'description': '', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'Calculators' }
+  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'GuidesCalculators' }
 ];
 
 class Resources extends React.Component {
@@ -20,12 +20,8 @@ class Resources extends React.Component {
   constructor(props) {
     super(props);
     //setting default state
-    this.state = { isLoading: true, search: '' };
-    this.arrayholder = [];
-  }
-
-  componentDidMount() {
-    menuItem = [{ '': '', }];
+    this.state = { isLoading: true, search: '', menuItem: menuItem };
+    this.arrayholder = menuItem;
   }
 
   search = text => {

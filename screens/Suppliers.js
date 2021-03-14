@@ -6,49 +6,68 @@ import { Block, Text, theme } from "galio-framework";
 // Argon themed components
 import { argonTheme } from "../constants";
 
-import { SearchBar } from 'react-native-elements';
 import * as SQLite from "expo-sqlite";
+import { SearchBar } from 'react-native-elements';
 
 const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get('screen');
+let menuItem = [];
 
-let menuItem = [
-  { 'id': 0, 'title': 'Version', 'description': '', 'navigateTo': 'Pro' },
-  { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
-];
-
-class Settings extends React.Component {
+class Suppliers extends React.Component {
 
   constructor(props) {
     super(props);
-    //setting default state
-    this.state = { isLoading: true, search: '', menuItem: menuItem };
-    this.arrayholder = menuItem;
+    this.state = {
+      isLoading: true, search: '',
+      content: {
+        // drug_category_id: props.route.params.drug_category_id,
+        // drug_category: props.route.params.drug_category,
+        // drug_category_description: props.route.params.drug_category_description,
+      },
+      db_version: "",
+    };
+    this.arrayholder = [];
   }
 
   componentDidMount() {
-    // get current version
     db.transaction((tx) => {
-      tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
-        console.log(rows.version);
-        let currentLocalVersion = '';
-        if (rows.length == 0 || rows._array[0].version == '') {
-          console.log('no existing version found');
-          currentLocalVersion = 'Not Available' + ' - Tap to update';
-        } else {
-          currentLocalVersion = rows._array[0].version + ' - Tap to update';
+      tx.executeSql("select content from tbl_publication", [], (_, { rows }) => {
+        if (rows.length > 0) {
+          // get all content
+          let contentItem = JSON.parse(rows.item(0).content);
+          contentItem = contentItem.tbl_publication;
+          for (var i = 0; i < contentItem.length; i++) {
+            if (contentItem[i].category_id == this.state.content.drug_category_id) {
+              menuItem.push(contentItem[i]);
+            }
+          }
+          menuItem.sort((a, b) => a.id - b.id);
+          this.setState(
+            {
+              isLoading: false,
+              menuItem: menuItem,
+            },
+            function () {
+              this.arrayholder = menuItem;
+            }
+          );
         }
-        console.log('checked local version');
-        let menuItem = [
-          { 'id': 0, 'title': 'Version', 'description': currentLocalVersion, 'navigateTo': 'Pro' },
-          { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-          { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
-        ];
-        this.state = { isLoading: true, search: '', menuItem: menuItem, };
       });
     });
+  }
 
+  componentWillUnmount() {
+    this.state = {
+      isLoading: true, search: '',
+      content: {
+        drug_category_id: 0,
+        drug_category: '',
+        drug_category_description: '',
+      },
+      db_version: "",
+    };
+    this.arrayholder = [];
+    menuItem = [];
   }
 
   search = text => {
@@ -74,22 +93,27 @@ class Settings extends React.Component {
   }
 
   ItemView = ({ item }) => {
+    let title = item.title.replace(/\+/g, " ");
+    title = unescape(title).trim();
     return (
+      // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push(item.navigateTo, {
-            selected_item: item,
+          this.props.navigation.push("MedicineDetail", {
+            medicine: item,
+            category: this.state.content.drug_category
           });
         }}>
-          {item.title}
+          {title}
         </Text>
-        <Text muted style={styles.subtitle}>{item.description}</Text>
+        <Text muted style={styles.subtitle} onPress={() => { }}>This is a muted paragraph.</Text>
       </View>
     );
   }
 
   ItemSeparatorView = () => {
     return (
+      // Flat List Item Separator
       <View
         style={{
           height: 0.5,
@@ -102,6 +126,7 @@ class Settings extends React.Component {
 
   render() {
     return (
+
       <Block flex style={styles.home}>
         <View
           style={{
@@ -168,4 +193,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default Suppliers;

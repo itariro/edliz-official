@@ -23,6 +23,10 @@ import MedicineCategories from "../screens/MedicineCategories";
 import MedicineDetail from "../screens/MedicineDetail";
 
 import Resources from "../screens/Resources";
+import GuidesCalculators from "../screens/GuidesCalculators";
+import Suppliers from "../screens/Suppliers";
+import Publications from "../screens/Publications";
+
 import Settings from "../screens/Settings";
 
 // drawer
@@ -240,6 +244,48 @@ function ProfileStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Settings" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="GuidesCalculators"
+        component={GuidesCalculators}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="GuidesCalculators" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Publications"
+        component={Publications}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Publications" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Suppliers"
+        component={Suppliers}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Suppliers" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE

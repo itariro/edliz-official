@@ -7,48 +7,21 @@ import { Block, Text, theme } from "galio-framework";
 import { argonTheme } from "../constants";
 
 import { SearchBar } from 'react-native-elements';
-import * as SQLite from "expo-sqlite";
-
-const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'Version', 'description': '', 'navigateTo': 'Pro' },
-  { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
+  { 'id': 0, 'title': 'BMI', 'description': '', 'navigateTo': 'Publications' },
+  { 'id': 1, 'title': 'Paeds Medicine Dosage Calculator', 'description': '', 'navigateTo': 'Suppliers' },
+  { 'id': 2, 'title': 'Reporting an Adverse Medicine Reaction', 'description': '', 'navigateTo': 'Calculators' }
 ];
 
-class Settings extends React.Component {
+class GuidesCalculators extends React.Component {
 
   constructor(props) {
     super(props);
     //setting default state
     this.state = { isLoading: true, search: '', menuItem: menuItem };
     this.arrayholder = menuItem;
-  }
-
-  componentDidMount() {
-    // get current version
-    db.transaction((tx) => {
-      tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
-        console.log(rows.version);
-        let currentLocalVersion = '';
-        if (rows.length == 0 || rows._array[0].version == '') {
-          console.log('no existing version found');
-          currentLocalVersion = 'Not Available' + ' - Tap to update';
-        } else {
-          currentLocalVersion = rows._array[0].version + ' - Tap to update';
-        }
-        console.log('checked local version');
-        let menuItem = [
-          { 'id': 0, 'title': 'Version', 'description': currentLocalVersion, 'navigateTo': 'Pro' },
-          { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-          { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
-        ];
-        this.state = { isLoading: true, search: '', menuItem: menuItem, };
-      });
-    });
-
   }
 
   search = text => {
@@ -168,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default GuidesCalculators;

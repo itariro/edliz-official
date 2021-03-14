@@ -24,6 +24,7 @@ import MedicineDetail from "../screens/MedicineDetail";
 
 import Resources from "../screens/Resources";
 import GuidesCalculators from "../screens/GuidesCalculators";
+import BMICalculator from "../screens/BMICalculator";
 import Suppliers from "../screens/Suppliers";
 import Publications from "../screens/Publications";
 
@@ -257,7 +258,7 @@ function ProfileStack(props) {
         component={GuidesCalculators}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="GuidesCalculators" navigation={navigation} scene={scene} back white style={{
+            <Header title="Guides and Calculators" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -286,6 +287,20 @@ function ProfileStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Suppliers" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="BMICalculator"
+        component={BMICalculator}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="BMICalculator" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE

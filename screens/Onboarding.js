@@ -14,17 +14,17 @@ import * as SQLite from "expo-sqlite";
 const { height, width } = Dimensions.get("screen");
 const db = SQLite.openDatabase("db.db");
 
-const add = (db_version, db_content) => {
+const dbStamp = (db_version, db_content) => {
   if (db_version === null || db_version === "") {
     return false;
   }
 
   db.transaction((tx) => {
-    tx.executeSql("insert into content (version, content) values (?, ?)", [
+    tx.executeSql("INSERT INTO tbl_content (version, content) values (?, ?)", [
       db_version,
       db_content,
     ]);
-    tx.executeSql("select * from content", [], (_, { rows }) =>
+    tx.executeSql("SELECT * FROM tbl_content", [], (_, { rows }) =>
       console.log(JSON.stringify(rows))
     );
   });
@@ -124,7 +124,7 @@ class Onboarding extends React.Component {
                 tx.executeSql("DELETE FROM tbl_sub_condition;");
                 tx.executeSql("DELETE FROM tbl_sub_condition_rows;");
                 tx.executeSql("DELETE FROM tbl_supplier;");
-                tx.executeSql("DELETE FROM content;");
+                tx.executeSql("DELETE FROM tbl_content;");
               });
               this.state = { update_progress: '10%' };
 
@@ -181,6 +181,10 @@ class Onboarding extends React.Component {
                 "tbl_supplier",
                 JSON.stringify(responseData.data[12])
               );
+
+              dbStamp(latestVersion, '');
+              this.state = { db_version: latestVersion }
+
               this.state = { update_progress: '100%' };
               this.state = { update_progress: 'All done...' };
 
@@ -227,7 +231,7 @@ class Onboarding extends React.Component {
 
     // create tables in the database
     db.transaction(tx => {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS content (id INTEGER PRIMARY KEY AUTOINCREMENT, version VARCHAR(64), content TEXT);');
+      tx.executeSql('CREATE TABLE IF NOT EXISTS tbl_content (id INTEGER PRIMARY KEY AUTOINCREMENT, version VARCHAR(64), content TEXT);');
       tx.executeSql("CREATE TABLE IF NOT EXISTS tbl_drug_category (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);");
       tx.executeSql("CREATE TABLE IF NOT EXISTS tbl_condition (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);");
       tx.executeSql("CREATE TABLE IF NOT EXISTS tbl_drug (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);");
@@ -240,7 +244,7 @@ class Onboarding extends React.Component {
       tx.executeSql("CREATE TABLE IF NOT EXISTS tbl_supplier (id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT);");
 
       // get current version
-      tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
+      tx.executeSql("SELECT * FROM tbl_content", [], (_, { rows }) => {
         console.log(rows.version);
         if (rows.length == 0 || rows._array[0].version == '') {
           console.log('no existing version found');
@@ -255,7 +259,7 @@ class Onboarding extends React.Component {
             update_progress: 'Preparing data...'
           };
         }
-        console.log('checked local version');
+        console.log('checked local version => ' + this.state.db_version);
         this._checkForUpdates(this.state.db_version);
       });
     });

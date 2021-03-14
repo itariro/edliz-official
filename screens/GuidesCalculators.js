@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, FlatList, View } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View, Linking } from 'react-native';
 
 // Galio components
 import { Block, Text, theme } from "galio-framework";
@@ -10,9 +10,8 @@ import { SearchBar } from 'react-native-elements';
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'BMI', 'description': '', 'navigateTo': 'Publications' },
-  { 'id': 1, 'title': 'Paeds Medicine Dosage Calculator', 'description': '', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Reporting an Adverse Medicine Reaction', 'description': '', 'navigateTo': 'Calculators' }
+  { 'id': 0, 'title': 'BMI', 'description': 'BMI (body mass index) is a measure of whether you are a healthy weight for your height. Use this BMI calculator to check the adults in your family.', 'navigateTo': 'BMICalculator' },
+  { 'id': 1, 'title': 'Reporting an Adverse Medicine Reaction', 'description': 'Use this tool to submit a report an Adverse Drug Reaction', 'navigateTo': 'https://e-pv.mcaz.co.zw/' }
 ];
 
 class GuidesCalculators extends React.Component {
@@ -46,16 +45,22 @@ class GuidesCalculators extends React.Component {
     });
   }
 
+  _handleNavigation = (item, args) => {
+    if (item.id == 1) {
+      Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
+    } else {
+      this.props.navigation.push(item.navigateTo, {
+        args: args,
+      });
+    }
+  }
+
   ItemView = ({ item }) => {
     return (
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push(item.navigateTo, {
-            selected_item: item,
-          });
-        }}>
-          {item.title}
-        </Text>
+          this._handleNavigation(item, '');
+        }}>{item.title}</Text>
         <Text muted style={styles.subtitle}>{item.description}</Text>
       </View>
     );

@@ -10,8 +10,8 @@ import { SearchBar } from 'react-native-elements';
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'Publications', 'description': '', 'navigateTo': 'Publications' },
-  { 'id': 1, 'title': 'Approved Suppliers', 'description': '', 'navigateTo': 'Suppliers' },
+  { 'id': 0, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications' },
+  { 'id': 1, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers' },
   { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'GuidesCalculators' }
 ];
 

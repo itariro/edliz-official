@@ -28,6 +28,31 @@ class Profile extends React.Component {
     //setting default state
     this.state = { isLoading: true };
   }
+
+  componentDidMount() {
+    //console.log('checked local version => ' + this.state.db_version);
+    // get current version
+    // db.transaction((tx) => {
+    //   tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
+    //     console.log(rows.version);
+    //     let currentLocalVersion = '';
+    //     if (rows.length == 0 || rows._array[0].version == '') {
+    //       console.log('no existing version found');
+    //       currentLocalVersion = 'Not Available' + ' - Tap to update';
+    //     } else {
+    //       currentLocalVersion = rows._array[0].version + ' - Tap to update';
+    //     }
+    //     console.log('checked local version');
+    //     let menuItem = [
+    //       { 'id': 0, 'title': 'Version', 'description': currentLocalVersion, 'navigateTo': 'Pro' },
+    //       { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
+    //       { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
+    //     ];
+    //     this.state = { isLoading: true, search: '', menuItem: menuItem, };
+    //   });
+    // });
+  }
+
   render() {
     const { navigation } = this.props;
     return (

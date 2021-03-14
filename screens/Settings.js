@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, FlatList, View } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View, Linking } from 'react-native';
 
 // Galio components
 import { Block, Text, theme } from "galio-framework";
@@ -13,9 +13,9 @@ const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'Version', 'description': '', 'navigateTo': 'Pro' },
-  { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
+  { 'id': 0, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding' },
+  { 'id': 1, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz' },
+  { 'id': 2, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'Calculators' }
 ];
 
 class Settings extends React.Component {
@@ -25,30 +25,6 @@ class Settings extends React.Component {
     //setting default state
     this.state = { isLoading: true, search: '', menuItem: menuItem };
     this.arrayholder = menuItem;
-  }
-
-  componentDidMount() {
-    // get current version
-    db.transaction((tx) => {
-      tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
-        console.log(rows.version);
-        let currentLocalVersion = '';
-        if (rows.length == 0 || rows._array[0].version == '') {
-          console.log('no existing version found');
-          currentLocalVersion = 'Not Available' + ' - Tap to update';
-        } else {
-          currentLocalVersion = rows._array[0].version + ' - Tap to update';
-        }
-        console.log('checked local version');
-        let menuItem = [
-          { 'id': 0, 'title': 'Version', 'description': currentLocalVersion, 'navigateTo': 'Pro' },
-          { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-          { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
-        ];
-        this.state = { isLoading: true, search: '', menuItem: menuItem, };
-      });
-    });
-
   }
 
   search = text => {
@@ -73,16 +49,22 @@ class Settings extends React.Component {
     });
   }
 
+  _handleNavigation = (item, args) => {
+    if (item.id == 1) {
+      Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
+    } else {
+      this.props.navigation.push(item.navigateTo, {
+        args: args,
+      });
+    }
+  }
+
   ItemView = ({ item }) => {
     return (
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push(item.navigateTo, {
-            selected_item: item,
-          });
-        }}>
-          {item.title}
-        </Text>
+          this._handleNavigation(item, '');
+        }}>{item.title}</Text>
         <Text muted style={styles.subtitle}>{item.description}</Text>
       </View>
     );

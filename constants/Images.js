@@ -30,8 +30,8 @@ const Viewed = [
 const MainMenu = [
   { 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories' },
   { 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions' },
-  { 'icon': icon_resources, 'title': 'Resources', 'description': '', 'navigateTo': '' },
-  { 'icon': icon_settings, 'title': 'Settings', 'description': '', 'navigateTo': '' }
+  { 'icon': icon_resources, 'title': 'Resources', 'description': '', 'navigateTo': 'Resources' },
+  { 'icon': icon_settings, 'title': 'Settings', 'description': '', 'navigateTo': 'Settings' }
 ];
 
 const Products = {

@@ -10,8 +10,11 @@ import { Block, Text, Button as GaButton, theme } from "galio-framework";
 import { argonTheme, Template } from "../constants";
 import WebView from "react-native-webview";
 import base64 from 'react-native-base64'
+import * as SQLite from "expo-sqlite";
 
+const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get("screen");
+let forms = '';
 
 class MedicineDetail extends React.Component {
   constructor(props) {
@@ -21,14 +24,51 @@ class MedicineDetail extends React.Component {
       content: {
         medicine: props.route.params.medicine,
         category: props.route.params.category,
-      }
+      },
+      formulation: ''
     };
   }
 
-  render() {
+  componentDidMount() {
+    db.transaction((tx) => {
+      tx.executeSql("select content from tbl_drug_formulation", [], (_, { rows }) => {
+        if (rows.length > 0) {
+          // get all content
+          console.log('tbl_drug_formulation');
+          let contentItem = JSON.parse(rows.item(0).content);
+          contentItem = contentItem.tbl_drug_formulation;
+          let formulationTable = '';
+          for (var i = 0; i < contentItem.length; i++) {
+            if (parseInt(contentItem[i].drug_id) == parseInt(this.state.content.medicine.id)) {
+              console.log('got this => ' + contentItem[i].form);
+              //console.log(contentItem[i].form);
+              formulationTable = formulationTable +
+                "<tr>" +
+                '<td style="text-align: left;"><strong>' + contentItem[i].form + '</strong><br>(' + contentItem[i].natpharm_code + ')</td>' +
+                "<td><strong>Strength</strong><br>" + contentItem[i].strength + '<br>' +
+                "<td><strong>Unit</strong><br>" + contentItem[i].unit +
+                "</td>" +
+                "</tr>";
+            }
+          }
 
+          formulationTable = base64.encode('<h3>Formulations</h3><table style="width:100%" >' + formulationTable + '</table>');
+          forms = formulationTable;
+          //console.log(formulationTable);
+          this.state = { formulation: formulationTable };
+        }
+      });
+    });
+  }
+
+  render() {
+    const { formulation } = this.state;
+    //formulations
+    console.log(formulation);
+
+    let title = this.state.content.medicine.title.replace(/\+/g, " ");
     let contentDetail =
-      '<br><br><h2 class="blog-post-title">' + this.state.content.medicine.title + '</h2>' +
+      '<br><br><h2 class="blog-post-title">' + unescape(title).trim() + '</h2>' +
       '<p class="blog-post-meta">' + this.state.content.category + '</p><hr /><br>' +
 
       '<h3>Codes</h3><table style="width:100%" >' +
@@ -45,6 +85,8 @@ class MedicineDetail extends React.Component {
       "<h3>Dosage Adults</h3>" + decodeURIComponent(this.state.content.medicine.dosage_adults.replace(/\+/g, "%20")) +
       "<h3>Dosage Paeds</h3>" + decodeURIComponent(this.state.content.medicine.dosage_paeds.replace(/\+/g, "%20")) + "<br><hr /><br>" +
 
+      base64.decode(formulation) +
+
       '<div class="col-md-4">' +
       '<div class="p-4 mb-3 bg-warning rounded">' +
       '<h3>Cautions</h3><hr />' +
@@ -60,44 +102,6 @@ class MedicineDetail extends React.Component {
 
     contentDetail = contentDetail.replace(/<table>/g, '<table class="table">');
 
-    //contentDetail = contentDetail.replace('<p>', '<p style="text-align: left; padding : 0; margin : 0; line-height : 20px;">');
-    //contentDetail = contentDetail.replace(/<table>/g, '<table style="width:100%">');
-    //contentDetail = contentDetail.replace(/<p>/g, '<p style="font-size:16%; padding : 0; margin : 0; line-height : 20px;">');
-    //contentDetail = contentDetail.replace(/<li>/g, '<li style="font-size:16%;">');
-    //contentDetail = contentDetail.replace(/<li>/g, '<li style="font-size:16%;">');
-    //contentDetail = contentDetail.replace(/<h3>/g, '<h2 style="font-size:30%;">');
-    //contentDetail = contentDetail.replace(/</h3>/, '</h2>');
-    //contentDetail = this.renderArticles();
-
-    // return (
-    //   <Block flex center>
-    //     <View
-    //       style={{
-    //         top: 0,
-    //         width: '100%',
-    //         backgroundColor: '#1E1C24',
-    //       }}
-    //     >
-    //       <Text bold size={28} style={styles.header_title}>
-    //         Diseases and Conditions
-    //       </Text>
-    //       <Text muted size={15} style={styles.header_subtitle}>This is a muted paragraph.</Text>
-    //     </View>
-    //     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30, width }}>
-    //       <View style={styles.container}>
-    //         <Block flex>
-    //           <View style={styles.container}>
-    //             <HTML
-    //               source={{ html: contentDetail }}
-    //               imagesMaxWidth={Dimensions.get("window").width}
-    //               {...htmlConfig}
-    //             />
-    //           </View>
-    //         </Block>
-    //       </View>
-    //     </ScrollView>
-    //   </Block>
-    // );
     const content =
       base64.decode(Template.PAGE.TOP) + contentDetail +
       base64.decode(Template.PAGE.BOTTOM);

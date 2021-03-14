@@ -22,6 +22,8 @@ import Medicines from "../screens/Medicines";
 import MedicineCategories from "../screens/MedicineCategories";
 import MedicineDetail from "../screens/MedicineDetail";
 
+import Resources from "../screens/Resources";
+import Settings from "../screens/Settings";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -210,6 +212,34 @@ function ProfileStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="MedicineDetail" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Resources"
+        component={Resources}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Resources" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Settings" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE

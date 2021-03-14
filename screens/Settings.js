@@ -6,68 +6,26 @@ import { Block, Text, theme } from "galio-framework";
 // Argon themed components
 import { argonTheme } from "../constants";
 
-import * as SQLite from "expo-sqlite";
 import { SearchBar } from 'react-native-elements';
-
-const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get('screen');
-let menuItem = [];
 
-class Medicines extends React.Component {
+let menuItem = [
+  { 'id': 0, 'title': 'Publications', 'description': '', 'navigateTo': 'Publications' },
+  { 'id': 1, 'title': 'Approved Suppliers', 'description': '', 'navigateTo': 'Suppliers' },
+  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'Calculators' }
+];
+
+class Settings extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: true, search: '',
-      content: {
-        drug_category_id: props.route.params.drug_category_id,
-        drug_category: props.route.params.drug_category,
-        drug_category_description: props.route.params.drug_category_description,
-      },
-      db_version: "",
-    };
+    //setting default state
+    this.state = { isLoading: true, search: '' };
     this.arrayholder = [];
   }
 
   componentDidMount() {
-    db.transaction((tx) => {
-      tx.executeSql("select content from tbl_drug", [], (_, { rows }) => {
-        if (rows.length > 0) {
-          // get all content
-          let contentItem = JSON.parse(rows.item(0).content);
-          contentItem = contentItem.tbl_drug;
-          for (var i = 0; i < contentItem.length; i++) {
-            if (contentItem[i].category_id == this.state.content.drug_category_id) {
-              menuItem.push(contentItem[i]);
-            }
-          }
-          menuItem.sort((a, b) => a.id - b.id);
-          this.setState(
-            {
-              isLoading: false,
-              menuItem: menuItem,
-            },
-            function () {
-              this.arrayholder = menuItem;
-            }
-          );
-        }
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.state = {
-      isLoading: true, search: '',
-      content: {
-        drug_category_id: 0,
-        drug_category: '',
-        drug_category_description: '',
-      },
-      db_version: "",
-    };
-    this.arrayholder = [];
-    menuItem = [];
+    menuItem = [{ '': '', }];
   }
 
   search = text => {
@@ -93,27 +51,22 @@ class Medicines extends React.Component {
   }
 
   ItemView = ({ item }) => {
-    let title = item.title.replace(/\+/g, " ");
-    title = unescape(title).trim();
     return (
-      // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push("MedicineDetail", {
-            medicine: item,
-            category: this.state.content.drug_category
+          this.props.navigation.push(item.navigateTo, {
+            selected_item: item,
           });
         }}>
-          {title}
+          {item.title}
         </Text>
-        <Text muted style={styles.subtitle} onPress={() => { }}>This is a muted paragraph.</Text>
+        <Text muted style={styles.subtitle}>{item.description}</Text>
       </View>
     );
   }
 
   ItemSeparatorView = () => {
     return (
-      // Flat List Item Separator
       <View
         style={{
           height: 0.5,
@@ -126,7 +79,6 @@ class Medicines extends React.Component {
 
   render() {
     return (
-
       <Block flex style={styles.home}>
         <View
           style={{
@@ -193,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Medicines;
+export default Settings;

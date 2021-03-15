@@ -85,7 +85,7 @@ class MedicineDetail extends React.Component {
       "<h3>Dosage Adults</h3>" + decodeURIComponent(this.state.content.medicine.dosage_adults.replace(/\+/g, "%20")) +
       "<h3>Dosage Paeds</h3>" + decodeURIComponent(this.state.content.medicine.dosage_paeds.replace(/\+/g, "%20")) + "<br><hr /><br>" +
 
-      base64.decode(formulation) +
+      //base64.decode(formulation) +
 
       '<div class="col-md-4">' +
       '<div class="p-4 mb-3 bg-warning rounded">' +

@@ -20,7 +20,7 @@ import * as SQLite from "expo-sqlite";
 
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 2;
-const thumbMeasureHeight = (width - 48 - 32) / 3;
+const thumbMeasureHeight = (width - 48 - 32) / 2.5;
 
 class Profile extends React.Component {
   constructor(props) {
@@ -77,7 +77,7 @@ class Profile extends React.Component {
                 <Text size={14} color="#FFFFFF" style={{ marginTop: 0 }}>
                   Ministry of Health and Child Care
                 </Text>
-                <Text bold size={28} color="#FFFFFF" style={{ textAlign: "center" }}>
+                <Text bold size={27} color="#FFFFFF" style={{ textAlign: "center", marginHorizontal: 8 }}>
                   Essential Medicines List and Standard Treatment Guidelines for Zimbabwe
                 </Text>
 
@@ -117,29 +117,14 @@ class Profile extends React.Component {
                             <Image
                               key={imgIndex}
                               source={img.icon}
-                              style={{ alignSelf: 'center', marginTop: 15, height: 42, width: 42 }}
+                              style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
                             />
-                            <Text bold size={16} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8 }}>{img.title}</Text>
+                            <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 4 }}>{img.title}</Text>
                           </TouchableOpacity>
                         </Block>
                       ))}
 
                     </Block>
-                  </Block>
-                  <Block middle style={{ marginTop: 30, marginBottom: 0 }}>
-                    <Block style={styles.divider} />
-                  </Block>
-                  <Block middle style={styles.nameInfo}>
-                    <Text size={16} color="#32325D" style={{ marginTop: 0, marginBottom: 0 }}>
-                      Version 2020
-                    </Text>
-                    <Text
-                      size={15}
-                      color="#525F7F"
-                      style={{ textAlign: "center", marginTop: 4 }}
-                    >
-                      (c) 2021. All rights reserved.
-                    </Text>
                   </Block>
                 </Block>
               </Block>
@@ -163,10 +148,11 @@ const styles = StyleSheet.create({
     height: height,
     padding: 0,
     zIndex: 1,
+    top: 0
   },
   profileBackground: {
     width: width,
-    height: height / 2
+    height: height / 1.5
   },
   profileCard: {
     // position: "relative",
@@ -192,9 +178,9 @@ const styles = StyleSheet.create({
     marginTop: -80
   },
   avatar: {
-    width: 100,
-    height: 150,
-    marginTop: height / 11.5
+    width: 97,
+    height: 140,
+    marginTop: height / 7
   },
   nameInfo: {
     marginTop: 15

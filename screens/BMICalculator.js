@@ -53,7 +53,7 @@ class BMICalculator extends React.Component {
           >
             {this.state.resultText}
           </Text>
-          <Text muted>BMI (body mass index) is a measure of whether you are a healthy weight for your height. Use this BMI calculator to check the adults in your family.</Text>
+          <Text muted>This calculator computes the body mass index and rates it appropriately for men, women, children, juveniles and seniors.</Text>
         </Block>
       </Block>
     );

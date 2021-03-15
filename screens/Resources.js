@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, FlatList, View } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View, Linking } from 'react-native';
 
 // Galio components
 import { Block, Text, theme } from "galio-framework";
@@ -10,9 +10,12 @@ import { SearchBar } from 'react-native-elements';
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications' },
-  { 'id': 1, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers' },
-  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'GuidesCalculators' }
+  { 'id': 0, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' },
+  { 'id': 1, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
+  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
+  { 'id': 3, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding', 'type': 'page' },
+  { 'id': 4, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
+  { 'id': 5, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
 ];
 
 class Resources extends React.Component {
@@ -46,16 +49,22 @@ class Resources extends React.Component {
     });
   }
 
+  _handleNavigation = (item, args) => {
+    if (item.type == 'url') {
+      Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
+    } else {
+      this.props.navigation.push(item.navigateTo, {
+        args: args,
+      });
+    }
+  }
+
   ItemView = ({ item }) => {
     return (
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push(item.navigateTo, {
-            selected_item: item,
-          });
-        }}>
-          {item.title}
-        </Text>
+          this._handleNavigation(item, '');
+        }}>{item.title}</Text>
         <Text muted style={styles.subtitle}>{item.description}</Text>
       </View>
     );

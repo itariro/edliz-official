@@ -29,6 +29,7 @@ import Suppliers from "../screens/Suppliers";
 import Publications from "../screens/Publications";
 
 import Settings from "../screens/Settings";
+import GlobalSearch from "../screens/GlobalSearch";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -301,6 +302,20 @@ function ProfileStack(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header title="BMICalculator" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="GlobalSearch"
+        component={GlobalSearch}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="GlobalSearch" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE

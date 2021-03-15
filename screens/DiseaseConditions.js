@@ -57,7 +57,7 @@ class DiseaseConditions extends React.Component {
 
   componentDidMount() {
     db.transaction((tx) => {
-      tx.executeSql("select content from tbl_condition", [], (_, { rows }) => {
+      tx.executeSql("select * from tbl_condition", [], (_, { rows }) => {
         if (rows.length > 0) {
           // get all content
           const content = JSON.parse(rows.item(0).content);
@@ -86,72 +86,49 @@ class DiseaseConditions extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    console.log(text);
-    //passing the inserted text in textinput
+    this.setState({ displayResults: false })
+    if (text != '') { this.setState({ displayResults: true }) }
     const newData = this.arrayholder.filter(function (item) {
-      //applying filter for the inserted text in search bar
       const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
 
     this.setState({
-      //setting the filtered newData on datasource
-      //After setting the data it will automatically re-render the view
       menuItem: newData,
       search: text,
     });
   }
 
-  fetchData = (id) => {
+  ItemView = ({ item }) => {
+    return (
+      <View>
+        <Text bold size={18} style={styles.title} onPress={() => this._navigateTo(item)} >
+          {item.title}
+        </Text>
+        <Text muted style={styles.subtitle} onPress={() => this._navigateTo(item)}>Chapter {item.id}</Text>
+      </View>
+    );
+  }
+
+  _navigateTo(item) {
     db.transaction(tx => {
-      // sending 4 arguments in executeSql
-      tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [id], // passing sql query and parameters:null
-        // success callback which sends two things Transaction object and ResultSet Object
+      tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
         (txObj, { rows }) => {
           if (rows.length > 0) {
-            console.log("rows.item(0).content");
-            // this.props.navigation.push("DiseaseConditionDetail", {
-            //   condition_id: id,
-            //   condition_title: rows.item(0).title,
-            //   condition_content: rows.item(0).content,
-            // });
+            console.log(rows.item(0).title);
+            this.props.navigation.push("DiseaseConditionDetail", {
+              condition_id: item.id,
+              condition_title: rows.item(0).title,
+              condition_content: rows.item(0).content,
+              condition_category: item.title,
+            });
           }
         },
         // failure callback which sends two things Transaction object and Error
         (txObj, error) => console.log('Error ', error)
-      ) // end executeSQL
-    }) // end transaction
-  }
-
-  ItemView = ({ item }) => {
-    return (
-      // Flat List Item
-      <View>
-        <Text bold size={18} style={styles.title} onPress={() => {
-          db.transaction(tx => {
-            tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
-              (txObj, { rows }) => {
-                if (rows.length > 0) {
-                  console.log(rows.item(0).title);
-                  this.props.navigation.push("DiseaseConditionDetail", {
-                    condition_id: item.id,
-                    condition_title: rows.item(0).title,
-                    condition_content: rows.item(0).content,
-                    condition_category: item.title,
-                  });
-                }
-              },
-              // failure callback which sends two things Transaction object and Error
-              (txObj, error) => console.log('Error ', error)
-            )
-          });
-        }}>
-          {item.title}
-        </Text>
-        <Text muted style={styles.subtitle}>This is a muted paragraph.</Text>
-      </View>
-    );
+      )
+    });
   }
 
   ItemSeparatorView = () => {
@@ -168,8 +145,8 @@ class DiseaseConditions extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
     return (
-
       <Block flex style={styles.home}>
         <View
           style={{
@@ -192,12 +169,27 @@ class DiseaseConditions extends React.Component {
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />
-        <FlatList
-          data={this.state.menuItem}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={this.ItemSeparatorView}
-          renderItem={this.ItemView}
-        />
+        <View>
+          {this.state.displayResults &&
+            <View
+              style={{
+                top: 0,
+                width: '100%',
+                backgroundColor: '#E1F5FE',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text muted size={15} style={{ textAlign: 'center', marginBottom: 8, marginTop: 8, marginHorizontal: 20, color: '#0D47A1' }} onPress={() => navigation.navigate('GlobalSearch')}>Found what you are looking for? Tap here to switch to Smart Search for a more precise and in-depth search.</Text>
+            </View>
+          }
+          <FlatList
+            data={this.state.menuItem}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={this.ItemSeparatorView}
+            renderItem={this.ItemView}
+          />
+        </View>
       </Block>
     );
   }

@@ -80,7 +80,7 @@ class MedicineCategories extends React.Component {
         }}>
           {medicineTitle}
         </Text>
-        <Text muted style={styles.subtitle} onPress={() => { }}>This is a muted paragraph.</Text>
+        <Text muted style={styles.subtitle} onPress={() => { }}>Approved Medicines</Text>
       </View>
     );
   }
@@ -117,7 +117,7 @@ class MedicineCategories extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

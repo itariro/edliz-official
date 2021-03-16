@@ -51,7 +51,7 @@ function checkForContentUpdates() {
       var response = JSON.parse(request.responseText);
       db.transaction((tx) => {
         tx.executeSql("select * from content", [], (_, { rows }) => {
-          console.log(rows.length);
+          //console.log(rows.length);
           if (
             rows.length == 0 ||
             rows._array[0].version != response.version[0].db_version
@@ -64,7 +64,7 @@ function checkForContentUpdates() {
               }
 
               if (contentRequest.status === 200) {
-                console.log('success', 'got content');
+                //console.log('success', 'got content');
 
               } else {
                 console.warn('error');

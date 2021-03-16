@@ -6,55 +6,50 @@ import {
   Image,
   ImageBackground,
   Platform,
-  TouchableOpacity,
+  TouchableOpacity, View, Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
-import { Button } from "../components";
-import { Images, argonTheme } from "../constants";
+import { Images } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import Icon from "../components/Icon";
 
-import { Ionicons } from "@expo/vector-icons";
-import * as SQLite from "expo-sqlite";
 
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 2;
 const thumbMeasureHeight = (width - 48 - 32) / 2.5;
 
+const thumbMeasureBigScreens = (width - 48 - 32) / 5;
+const thumbMeasureBigScreensHeight = (width - 48 - 32) / 6;
+
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     //setting default state
-    this.state = { isLoading: true };
+    if ((width >= 1000) && (height >= 1000)) {
+      this.state = { bigScreen: true };
+    } else {
+      this.state = { bigScreen: false };
+    }
   }
 
   componentDidMount() {
-    //console.log('checked local version => ' + this.state.db_version);
-    // get current version
-    // db.transaction((tx) => {
-    //   tx.executeSql("SELECT * FROM content", [], (_, { rows }) => {
-    //     console.log(rows.version);
-    //     let currentLocalVersion = '';
-    //     if (rows.length == 0 || rows._array[0].version == '') {
-    //       console.log('no existing version found');
-    //       currentLocalVersion = 'Not Available' + ' - Tap to update';
-    //     } else {
-    //       currentLocalVersion = rows._array[0].version + ' - Tap to update';
-    //     }
-    //     console.log('checked local version');
-    //     let menuItem = [
-    //       { 'id': 0, 'title': 'Version', 'description': currentLocalVersion, 'navigateTo': 'Pro' },
-    //       { 'id': 1, 'title': 'Terms and Conditions', 'description': '', 'navigateTo': 'Suppliers' },
-    //       { 'id': 2, 'title': 'Send us Feedback', 'description': '', 'navigateTo': 'Calculators' }
-    //     ];
-    //     this.state = { isLoading: true, search: '', menuItem: menuItem, };
-    //   });
-    // });
+    //console.log('w => ' + width);
+    //console.log('h => ' + height);
+  }
+
+  _handleNavigation = (item, args) => {
+    if (item.type == 'url') {
+      Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
+    } else {
+      this.props.navigation.push(item.navigateTo, {
+        args: args,
+      });
+    }
   }
 
   render() {
-    const { navigation } = this.props;
+    //console.log('big screen? => ' + this.state.bigScreen);
     return (
       <Block flex style={styles.profile}>
         <Block flex>
@@ -109,22 +104,47 @@ class Profile extends React.Component {
                   >
                   </Block>
                   <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-                    <Block row space="between" style={{ flexWrap: "wrap" }}>
 
-                      {Images.MainMenu.map((img, imgIndex) => (
-                        <Block style={styles.thumb}>
-                          <TouchableOpacity key={imgIndex} onPress={() => navigation.navigate(img.navigateTo)}>
-                            <Image
-                              key={imgIndex}
-                              source={img.icon}
-                              style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
-                            />
-                            <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 4 }}>{img.title}</Text>
-                          </TouchableOpacity>
+                    {/* for phones */}
+                    {this.state.bigScreen &&
+                      <View>
+                        <Block row space="between" style={{ flexWrap: "wrap" }}>
+                          {Images.MainMenuBigScreens.map((img, imgIndex) => (
+                            <Block key={`viewed-${img}`} style={styles.thumbBigScreens}>
+                              <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
+                                <Image
+                                  key={img.id}
+                                  source={img.icon}
+                                  style={{ alignSelf: 'center', marginTop: 30, height: 64, width: 64 }}
+                                />
+                                <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 8 }}>{img.title}</Text>
+                              </TouchableOpacity>
+                            </Block>
+                          ))}
                         </Block>
-                      ))}
+                      </View>
+                    }
 
-                    </Block>
+                    {/* for tablets */}
+                    {!this.state.bigScreen &&
+                      <View>
+                        <Block row space="between" style={{ flexWrap: "wrap" }}>
+                          {Images.MainMenu.map((img, imgIndex) => (
+                            <Block key={`viewed-${img}`} style={styles.thumb}>
+                              <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
+                                <Image
+                                  key={img.id}
+                                  source={img.icon}
+                                  style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
+                                />
+                                <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 4 }}>{img.title}</Text>
+                              </TouchableOpacity>
+                            </Block>
+                          ))}
+                        </Block>
+                      </View>
+                    }
+
                   </Block>
                 </Block>
               </Block>
@@ -196,6 +216,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: thumbMeasure,
     height: thumbMeasureHeight,
+    backgroundColor: '#ede7f6'
+  },
+  thumbBigScreens: {
+    borderRadius: 4,
+    marginVertical: 8,
+    alignSelf: "center",
+    width: thumbMeasureBigScreens,
+    height: thumbMeasureBigScreensHeight,
     backgroundColor: '#ede7f6'
   },
   menu_icon: {

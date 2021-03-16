@@ -11,11 +11,12 @@ const { width } = Dimensions.get('screen');
 
 let menuItem = [
   { 'id': 0, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' },
-  { 'id': 1, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
-  { 'id': 2, 'title': 'Guides and Calculators', 'description': '', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
-  { 'id': 3, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding', 'type': 'page' },
-  { 'id': 4, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
-  { 'id': 5, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
+  { 'id': 1, 'title': 'Institutions', 'description': 'Directory of approved suppliers', 'navigateTo': 'Institutions', 'type': 'page' },
+  { 'id': 2, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
+  { 'id': 3, 'title': 'Guides and Calculators', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
+  { 'id': 4, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding', 'type': 'page' },
+  { 'id': 5, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
+  { 'id': 6, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
 ];
 
 class Resources extends React.Component {
@@ -65,7 +66,9 @@ class Resources extends React.Component {
         <Text bold size={18} style={styles.title} onPress={() => {
           this._handleNavigation(item, '');
         }}>{item.title}</Text>
-        <Text muted style={styles.subtitle}>{item.description}</Text>
+        <Text muted style={styles.subtitle} onPress={() => {
+          this._handleNavigation(item, '');
+        }}>{item.description}</Text>
       </View>
     );
   }
@@ -102,7 +105,7 @@ class Resources extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

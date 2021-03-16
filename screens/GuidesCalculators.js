@@ -24,7 +24,7 @@ class GuidesCalculators extends React.Component {
   }
 
   search = text => {
-    console.log(text);
+    //console.log(text);
   };
 
   clear = () => {
@@ -32,7 +32,7 @@ class GuidesCalculators extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    console.log(text);
+    //console.log(text);
     const newData = this.arrayholder.filter(function (item) {
       const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -100,7 +100,7 @@ class GuidesCalculators extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

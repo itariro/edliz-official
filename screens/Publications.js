@@ -20,9 +20,6 @@ class Publications extends React.Component {
     this.state = {
       isLoading: true, search: '',
       content: {
-        // drug_category_id: props.route.params.drug_category_id,
-        // drug_category: props.route.params.drug_category,
-        // drug_category_description: props.route.params.drug_category_description,
       },
       db_version: "",
     };
@@ -37,9 +34,7 @@ class Publications extends React.Component {
           let contentItem = JSON.parse(rows.item(0).content);
           contentItem = contentItem.tbl_publication;
           for (var i = 0; i < contentItem.length; i++) {
-            if (contentItem[i].category_id == this.state.content.drug_category_id) {
-              menuItem.push(contentItem[i]);
-            }
+            menuItem.push(contentItem[i]);
           }
           menuItem.sort((a, b) => a.id - b.id);
           this.setState(
@@ -58,7 +53,7 @@ class Publications extends React.Component {
 
   componentWillUnmount() {
     this.state = {
-      isLoading: true, search: '',
+      isLoading: false, search: '',
       content: {
         drug_category_id: 0,
         drug_category: '',
@@ -71,7 +66,7 @@ class Publications extends React.Component {
   }
 
   search = text => {
-    console.log(text);
+    //console.log(text);
   };
 
   clear = () => {
@@ -79,7 +74,7 @@ class Publications extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    console.log(text);
+    //console.log(text);
     const newData = this.arrayholder.filter(function (item) {
       const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -92,21 +87,21 @@ class Publications extends React.Component {
     });
   }
 
+  _handleNavigation = (args) => {
+    this.props.navigation.push("PublicationDetail", {
+      payload: args,
+    });
+  }
+
   ItemView = ({ item }) => {
-    let title = item.title.replace(/\+/g, " ");
-    title = unescape(title).trim();
     return (
-      // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push("MedicineDetail", {
-            medicine: item,
-            category: this.state.content.drug_category
-          });
-        }}>
-          {title}
-        </Text>
-        <Text muted style={styles.subtitle} onPress={() => { }}>This is a muted paragraph.</Text>
+          this._handleNavigation(item);
+        }}>{item.title}</Text>
+        <Text muted style={styles.subtitle} onPress={() => {
+          this._handleNavigation(item);
+        }}>{item.description}</Text>
       </View>
     );
   }
@@ -126,7 +121,6 @@ class Publications extends React.Component {
 
   render() {
     return (
-
       <Block flex style={styles.home}>
         <View
           style={{
@@ -145,7 +139,7 @@ class Publications extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />
@@ -158,6 +152,7 @@ class Publications extends React.Component {
       </Block>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

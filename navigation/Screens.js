@@ -26,10 +26,16 @@ import Resources from "../screens/Resources";
 import GuidesCalculators from "../screens/GuidesCalculators";
 import BMICalculator from "../screens/BMICalculator";
 import Suppliers from "../screens/Suppliers";
+import SupplierDetail from "../screens/SupplierDetail";
 import Publications from "../screens/Publications";
+import PublicationDetail from "../screens/PublicationDetail";
+
+import Institutions from "../screens/Institutions";
+import InstitutionDetail from "../screens/InstitutionDetail";
 
 import Settings from "../screens/Settings";
 import GlobalSearch from "../screens/GlobalSearch";
+import Update from "../screens/Update";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -175,7 +181,7 @@ function ProfileStack(props) {
         component={DiseaseConditions}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="DiseaseConditions" navigation={navigation} scene={scene} back white style={{
+            <Header title="Diseases and Conditions" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -189,7 +195,7 @@ function ProfileStack(props) {
         component={DiseaseConditionDetail}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="DiseaseConditionDetail" navigation={navigation} scene={scene} back white style={{
+            <Header title="Disease and Conditions" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -203,7 +209,7 @@ function ProfileStack(props) {
         component={MedicineCategories}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="MedicineCategories" navigation={navigation} scene={scene} back white style={{
+            <Header title="Medicine Categories" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -217,7 +223,7 @@ function ProfileStack(props) {
         component={MedicineDetail}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="MedicineDetail" navigation={navigation} scene={scene} back white style={{
+            <Header title="Medicine" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -231,7 +237,7 @@ function ProfileStack(props) {
         component={Resources}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Resources" navigation={navigation} scene={scene} back white style={{
+            <Header title="Tools and Resources" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -287,7 +293,21 @@ function ProfileStack(props) {
         component={Suppliers}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Suppliers" navigation={navigation} scene={scene} back white style={{
+            <Header title="Approved Suppliers" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Institutions"
+        component={Institutions}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Institutions" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -315,11 +335,70 @@ function ProfileStack(props) {
         component={GlobalSearch}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="GlobalSearch" navigation={navigation} scene={scene} back white style={{
+            <Header title="Smart Search" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
             }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="SupplierDetail"
+        component={SupplierDetail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Supplier" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="PublicationDetail"
+        component={PublicationDetail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Publication" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="InstitutionDetail"
+        component={InstitutionDetail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Institution" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="Update"
+        component={Update}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title=""
+              back
+              white
+              transparent
+              navigation={navigation}
+              scene={scene}
+            />
           ),
           headerTransparent: true
         }}

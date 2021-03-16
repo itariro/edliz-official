@@ -103,27 +103,6 @@ class Home extends React.Component {
     });
   }
 
-  fetchData = (id) => {
-    db.transaction(tx => {
-      // sending 4 arguments in executeSql
-      tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [id], // passing sql query and parameters:null
-        // success callback which sends two things Transaction object and ResultSet Object
-        (txObj, { rows }) => {
-          if (rows.length > 0) {
-            console.log("rows.item(0).content");
-            // this.props.navigation.push("DiseaseConditionDetail", {
-            //   condition_id: id,
-            //   condition_title: rows.item(0).title,
-            //   condition_content: rows.item(0).content,
-            // });
-          }
-        },
-        // failure callback which sends two things Transaction object and Error
-        (txObj, error) => console.log('Error ', error)
-      ) // end executeSQL
-    }) // end transaction
-  }
-
   ItemView = ({ item }) => {
     return (
       // Flat List Item
@@ -204,7 +183,7 @@ class Home extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

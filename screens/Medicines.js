@@ -92,21 +92,24 @@ class Medicines extends React.Component {
     });
   }
 
+  _handleNavigation = (args) => {
+    this.props.navigation.push("MedicineDetail", {
+      medicine: args,
+      category: this.state.content.drug_category
+    });
+  }
+
   ItemView = ({ item }) => {
     let title = item.title.replace(/\+/g, " ");
     title = unescape(title).trim();
     return (
-      // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this.props.navigation.push("MedicineDetail", {
-            medicine: item,
-            category: this.state.content.drug_category
-          });
-        }}>
-          {title}
-        </Text>
-        <Text muted style={styles.subtitle} onPress={() => { }}>This is a muted paragraph.</Text>
+          this._handleNavigation(item);
+        }}>{title}</Text>
+        <Text muted style={styles.subtitle} onPress={() => {
+          this._handleNavigation(item);
+        }}>{this.state.content.drug_category}</Text>
       </View>
     );
   }
@@ -145,7 +148,7 @@ class Medicines extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

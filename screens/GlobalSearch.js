@@ -1,22 +1,18 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View, Image } from 'react-native';
 
 // Galio components
-import { Block, Text, Button as GaButton, theme } from "galio-framework";
+import { Block, Text, theme } from "galio-framework";
 
 // Argon themed components
-import { argonTheme, tabs } from "../constants";
-import { Button, Select, Icon, Input, Header, Switch } from "../components/";
+import { argonTheme } from "../constants";
+import Images from "../constants/Images";
 
 import * as SQLite from "expo-sqlite";
 import { SearchBar } from 'react-native-elements';
 
 const db = SQLite.openDatabase("db.db");
-let menuItem = [];
-let subConditions = [];
-
 const { width } = Dimensions.get('screen');
-
 class GlobalSearch extends React.Component {
 
   constructor(props) {
@@ -76,9 +72,7 @@ class GlobalSearch extends React.Component {
     console.log(text);
     this.setState({ displayResults: false })
     if (text != '') { this.setState({ displayResults: true }) }
-    //passing the inserted text in textinput
     const newData = this.arrayholder.filter(function (item) {
-      //applying filter for the inserted text in search bar
       const itemData = item.content ? item.content.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
@@ -98,32 +92,25 @@ class GlobalSearch extends React.Component {
     });
   }
 
+  _handleNavigation = (item) => {
+    this.props.navigation.push("DiseaseConditionDetail", {
+      condition_id: item.id,
+      condition_title: item.title,
+      condition_content: item.content,
+      condition_category: 'Diseases and Conditions',
+    });
+  }
+
   ItemView = ({ item }) => {
     const summary = item.title_count + item.content_count + ' matches found';
     return (
-      // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          db.transaction(tx => {
-            tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
-              (txObj, { rows }) => {
-                if (rows.length > 0) {
-                  console.log(rows.item(0).title);
-                  this.props.navigation.push("DiseaseConditionDetail", {
-                    condition_id: item.id,
-                    condition_title: item.title,
-                    condition_content: item.content,
-                    condition_category: 'Diseases and Conditions',
-                  });
-                }
-              },
-              (txObj, error) => console.log('Error ', error)
-            )
-          });
-        }}>
-          {item.title}
-        </Text>
-        <Text muted style={styles.subtitle}>{summary} </Text>
+          this._handleNavigation(item);
+        }}>{item.title}</Text>
+        <Text muted style={styles.subtitle} onPress={() => {
+          this._handleNavigation(item);
+        }}>{summary}</Text>
       </View>
     );
   }
@@ -161,7 +148,7 @@ class GlobalSearch extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />{this.state.displayResults &&
@@ -198,6 +185,7 @@ class GlobalSearch extends React.Component {
               alignItems: 'center'
             }}
           >
+            <Image source={Images.icon_resources} style={{ alignSelf: 'center', marginTop: 20, marginBottom: 16, height: 64, width: 64 }} />
             <Text bold size={16} style={{ textAlign: 'center', marginBottom: 8, marginHorizontal: 20, color: argonTheme.COLORS.HEADER }}>Quickly dig through thousands of our drug, disease and condition information using the EDLIZ Smart Search. To search, simply type in the serach box above.</Text>
           </View>
         }

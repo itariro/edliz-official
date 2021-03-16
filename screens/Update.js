@@ -78,7 +78,7 @@ const saveAsColumns = (db_table, db_content) => {
 
 };
 
-class Onboarding extends React.Component {
+class Update extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -348,4 +348,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Onboarding;
+export default Update;

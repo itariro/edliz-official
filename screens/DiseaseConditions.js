@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View } from 'react-native';
 
 // Galio components
-import { Block, Text, Button as GaButton, theme } from "galio-framework";
+import { Block, Text, theme } from "galio-framework";
 // Argon themed components
-import { argonTheme, tabs } from "../constants";
+import { argonTheme } from "../constants";
 
-import { Ionicons } from "@expo/vector-icons";
 import * as SQLite from "expo-sqlite";
 import { SearchBar } from 'react-native-elements';
 
@@ -165,7 +164,7 @@ class DiseaseConditions extends React.Component {
           searchIcon={{ size: 24 }}
           onChangeText={text => this.SearchFilterFunction(text)}
           onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type Here to Search"
           value={this.state.search}
           containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
         />

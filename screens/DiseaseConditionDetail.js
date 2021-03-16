@@ -26,6 +26,8 @@ class DiseaseConditionDetail extends React.Component {
   render() {
     let contentDetail = this.state.content.contentDetail;
     contentDetail = decodeURIComponent(contentDetail.replace(/\+/g, "%20"));
+    contentDetail = contentDetail.replace(/<img/g, '<img class="img-responsive"');
+
     const content =
       base64.decode(Template.PAGE.TOP) + '<br><br><h2 class="blog-post-title">' + this.state.content.contentTitle + '</h2>' +
       '<p class="blog-post-meta">' + this.state.content.contentCategory + '</p><hr /><br>' + contentDetail +

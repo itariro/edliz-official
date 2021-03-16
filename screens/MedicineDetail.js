@@ -34,14 +34,14 @@ class MedicineDetail extends React.Component {
       tx.executeSql("select content from tbl_drug_formulation", [], (_, { rows }) => {
         if (rows.length > 0) {
           // get all content
-          console.log('tbl_drug_formulation');
+          //console.log('tbl_drug_formulation');
           let contentItem = JSON.parse(rows.item(0).content);
           contentItem = contentItem.tbl_drug_formulation;
           let formulationTable = '';
           for (var i = 0; i < contentItem.length; i++) {
             if (parseInt(contentItem[i].drug_id) == parseInt(this.state.content.medicine.id)) {
-              console.log('got this => ' + contentItem[i].form);
-              //console.log(contentItem[i].form);
+              //console.log('got this => ' + contentItem[i].form);
+              ////console.log(contentItem[i].form);
               formulationTable = formulationTable +
                 "<tr>" +
                 '<td style="text-align: left;"><strong>' + contentItem[i].form + '</strong><br>(' + contentItem[i].natpharm_code + ')</td>' +
@@ -54,7 +54,7 @@ class MedicineDetail extends React.Component {
 
           formulationTable = base64.encode('<h3>Formulations</h3><table style="width:100%" >' + formulationTable + '</table>');
           forms = formulationTable;
-          //console.log(formulationTable);
+          ////console.log(formulationTable);
           this.state = { formulation: formulationTable };
         }
       });
@@ -64,7 +64,7 @@ class MedicineDetail extends React.Component {
   render() {
     const { formulation } = this.state;
     //formulations
-    console.log(formulation);
+    //console.log(formulation);
 
     let title = this.state.content.medicine.title.replace(/\+/g, " ");
     let contentDetail =
@@ -83,22 +83,19 @@ class MedicineDetail extends React.Component {
       "</table>" + "<hr /><br>" +
       "<h3>Patient Information</h3>" + decodeURIComponent(this.state.content.medicine.patient_info.replace(/\+/g, "%20")) + "<hr /><br>" +
       "<h3>Dosage Adults</h3>" + decodeURIComponent(this.state.content.medicine.dosage_adults.replace(/\+/g, "%20")) +
-      "<h3>Dosage Paeds</h3>" + decodeURIComponent(this.state.content.medicine.dosage_paeds.replace(/\+/g, "%20")) + "<br><hr /><br>" +
+      "<br><h3>Dosage Paeds</h3>" + decodeURIComponent(this.state.content.medicine.dosage_paeds.replace(/\+/g, "%20")) + "<br><hr /><br>" +
 
       //base64.decode(formulation) +
 
-      '<div class="col-md-4">' +
-      '<div class="p-4 mb-3 bg-warning rounded">' +
-      '<h3>Cautions</h3><hr />' +
-
-      "<h4>Pregnancy</h4>" + decodeURIComponent(this.state.content.medicine.pregnancy.replace(/\+/g, "%20")) +
+      '<h3>Cautions</h3><p>Please take special care to take noe of the items in this section when when administering this medicine</p>' +
+      '<div class="card bg-warning">' +
+      '<div class="card-body">' +
+      "<br><h4>Pregnancy</h4>" + decodeURIComponent(this.state.content.medicine.pregnancy.replace(/\+/g, "%20")) +
       "<h4>Adverse Effects</h4>" + decodeURIComponent(this.state.content.medicine.adverse_effects.replace(/\+/g, "%20")) +
       "<h4>Blackbox</h4>" + decodeURIComponent(this.state.content.medicine.warnings_black_box.replace(/\+/g, "%20")) +
       "<h4>Contraindications</h4>" + decodeURIComponent(this.state.content.medicine.warnings_contraindications.replace(/\+/g, "%20")) +
-      "<h4>Cautions</h4>" + decodeURIComponent(this.state.content.medicine.warnings_cautions.replace(/\+/g, "%20")) +
-
-      '</div>' +
-      '</div>';
+      "<h4>Cautions</h4>" + decodeURIComponent(this.state.content.medicine.warnings_cautions.replace(/\+/g, "%20"))
+    '</div></div>';
 
     contentDetail = contentDetail.replace(/<table>/g, '<table class="table">');
 

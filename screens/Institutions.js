@@ -1,34 +1,72 @@
 import React from 'react';
-import { StyleSheet, Dimensions, FlatList, View, Linking } from 'react-native';
+import { StyleSheet, Dimensions, FlatList, View } from 'react-native';
 
 // Galio components
 import { Block, Text, theme } from "galio-framework";
 // Argon themed components
 import { argonTheme } from "../constants";
 
-import { SearchBar } from 'react-native-elements';
 import * as SQLite from "expo-sqlite";
+import { SearchBar } from 'react-native-elements';
 
 const db = SQLite.openDatabase("db.db");
 const { width } = Dimensions.get('screen');
+let menuItem = [];
 
-let menuItem = [
-  { 'id': 0, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding' },
-  { 'id': 1, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz' },
-  { 'id': 2, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'Calculators' }
-];
-
-class Settings extends React.Component {
+class Institutions extends React.Component {
 
   constructor(props) {
     super(props);
-    //setting default state
-    this.state = { isLoading: true, search: '', menuItem: menuItem };
-    this.arrayholder = menuItem;
+    this.state = {
+      isLoading: true, search: '',
+      content: {
+      },
+      db_version: "",
+    };
+    this.arrayholder = [];
+  }
+
+  componentDidMount() {
+    db.transaction((tx) => {
+      tx.executeSql("select content from tbl_institution", [], (_, { rows }) => {
+        if (rows.length > 0) {
+          // get all content
+          let contentItem = JSON.parse(rows.item(0).content);
+          contentItem = contentItem.tbl_institution;
+          for (var i = 0; i < contentItem.length; i++) {
+            menuItem.push(contentItem[i]);
+          }
+          menuItem.sort((a, b) => a.id - b.id);
+          this.setState(
+            {
+              isLoading: false,
+              menuItem: menuItem,
+            },
+            function () {
+              this.arrayholder = menuItem;
+            }
+          );
+        }
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.state = {
+      isLoading: false, search: '',
+      content: {
+        drug_category_id: 0,
+        drug_category: '',
+        drug_category_description: '',
+      },
+      db_version: "",
+    };
+    this.arrayholder = [];
+    menuItem = [];
   }
 
   search = text => {
-    //console.log(text);
+    console.log(text);
   };
 
   clear = () => {
@@ -36,7 +74,7 @@ class Settings extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    //console.log(text);
+    console.log(text);
     const newData = this.arrayholder.filter(function (item) {
       const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -49,29 +87,28 @@ class Settings extends React.Component {
     });
   }
 
-  _handleNavigation = (item, args) => {
-    if (item.id == 1) {
-      Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
-    } else {
-      this.props.navigation.push(item.navigateTo, {
-        args: args,
-      });
-    }
+  _handleNavigation = (args) => {
+    this.props.navigation.push("InstitutionDetail", {
+      payload: args,
+    });
   }
 
   ItemView = ({ item }) => {
     return (
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          this._handleNavigation(item, '');
-        }}>{item.title}</Text>
-        <Text muted style={styles.subtitle}>{item.description}</Text>
+          this._handleNavigation(item);
+        }}>{item.name}</Text>
+        <Text muted style={styles.subtitle} onPress={() => {
+          this._handleNavigation(item);
+        }}>{item.address}, {item.town}</Text>
       </View>
     );
   }
 
   ItemSeparatorView = () => {
     return (
+      // Flat List Item Separator
       <View
         style={{
           height: 0.5,
@@ -115,6 +152,7 @@ class Settings extends React.Component {
       </Block>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -150,4 +188,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default Institutions;

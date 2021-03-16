@@ -24,15 +24,17 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
       style={styles.container}
       forceInset={{ top: 'always', horizontal: 'never' }}
     >
-      <Block flex={0.06} style={styles.header}>
+      <Block flex={0.25} style={styles.header}>
+        <Text size={25} style={{ textAlign: 'left', color: '#0D47A1' }}>Essential Medicines List and Standard Treatment Guidelines for Zimbabwe</Text>
+        <Text style={{ textAlign: 'left', marginTop: 8, marginHorizontal: 2, color: '#0D47A1' }}>8th Edition</Text>
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           <Text>EDLIZ clinical reference is the most authoritative and accessible point-of-care medical reference for healthcare professionals, available via all major mobile devices. All content is free. The clinical information represents the expertise and practical knowledge of top physicians and pharmacists from leading academic medical centers in Zimbabwe. </Text>
           <Text style={{ textAlign: 'left', marginBottom: 8, marginTop: 8, marginHorizontal: 2, color: '#0D47A1' }}>Further copies may be obtained through the relevant Provincial Medical Directorate, City Health Directorate, the NMTPAC, Ministry of Health & Child Care (MoHCC), PO Box CY 1122, Causeway, Harare, Zimbabwe, or the MoHCC website www.mohcc.gov.zw. Copies of the text may be obtained on soft copy if required for teaching purposes from email address: dps@mohcc.gov.zw or nmtpac@gmail.com EDLIZ was prepared using Microsoft® Word.</Text>
-          <Text style={{ textAlign: 'left', marginBottom: 8, marginTop: 8, marginHorizontal: 2, color: '#0D47A1' }}>The information presented in these guidelines conforms to current medical, nursing and pharmaceutical practice. It is provided in good faith. Whilst every effort was made to ensure that medicine doses are correct, no responsibility can be taken for errors and omissions.</Text>
+          <Text style={{ textAlign: 'left', marginBottom: 8, marginHorizontal: 2, color: '#0D47A1' }}>The information presented in these guidelines conforms to current medical, nursing and pharmaceutical practice. It is provided in good faith. Whilst every effort was made to ensure that medicine doses are correct, no responsibility can be taken for errors and omissions.</Text>
 
-          <Text style={{ textAlign: 'left', marginBottom: 8, marginTop: 8, marginHorizontal: 2, color: '#0D47A1' }}>No part of this publication may be reproduced by any process without the written permission of the copyright holder, exception being made for the purpose of private study, research, criticism or review, or for teaching, but not for sale or other commercial use.</Text>
+          <Text style={{ textAlign: 'left', marginBottom: 8, marginHorizontal: 2, color: '#0D47A1' }}>No part of this publication may be reproduced by any process without the written permission of the copyright holder, exception being made for the purpose of private study, research, criticism or review, or for teaching, but not for sale or other commercial use.</Text>
           <Text style={{ textAlign: 'left', marginBottom: 8, marginTop: 8, marginHorizontal: 2, color: '#0D47A1' }}>© Copyright 2021, Ministry of Health & Child Care</Text>
 
           <Block flex style={{ marginTop: 24, marginVertical: 8, paddingHorizontal: 8 }}>
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingHorizontal: 28,
+    paddingHorizontal: 16,
     paddingBottom: theme.SIZES.BASE,
     paddingTop: theme.SIZES.BASE * 3,
     justifyContent: 'center'

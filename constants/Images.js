@@ -16,6 +16,16 @@ const icon_infections = require("../assets/icons/infection.png");
 const icon_resources = require("../assets/icons/algorithm.png");
 const icon_settings = require("../assets/icons/automation.png");
 
+const institutions = require("../assets/icons/hotel.png");
+const suppliers = require("../assets/icons/communication.png");
+const guides = require("../assets/icons/stationery.png");
+const update = require("../assets/icons/gear.png");
+const terms = require("../assets/icons/computer.png");
+const feedback = require("../assets/icons/advertising.png");
+const publications = require("../assets/icons/knowledge.png");
+
+
+
 // internet imgs
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
@@ -28,10 +38,25 @@ const Viewed = [
 
 //menu 
 const MainMenu = [
-  { 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories' },
-  { 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions' },
-  { 'icon': icon_settings, 'title': 'Tools and Resources', 'description': '', 'navigateTo': 'Resources' },
-  { 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch' }
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories' },
+  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions' },
+  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': '', 'navigateTo': 'Resources' },
+  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch' }
+];
+
+const MainMenuBigScreens = [
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories', 'type': 'page' },
+  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
+  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': '', 'navigateTo': 'Resources', 'type': 'page' },
+  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch', 'type': 'page' },
+  { 'id': 4, 'icon': publications, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' },
+  { 'id': 5, 'icon': institutions, 'title': 'Institutions', 'description': 'Directory of approved suppliers', 'navigateTo': 'Institutions', 'type': 'page' },
+  { 'id': 6, 'icon': suppliers, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
+  { 'id': 7, 'icon': guides, 'title': 'Guides and Calculators', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
+  { 'id': 8, 'icon': update, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Update', 'type': 'page' },
+  { 'id': 9, 'icon': terms, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
+  { 'id': 10, 'icon': feedback, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
+
 ];
 
 const Products = {
@@ -53,4 +78,6 @@ export default {
   androidLogo,
   MoHCCCoatOfArms,
   MainMenu,
+  icon_resources,
+  MainMenuBigScreens
 };

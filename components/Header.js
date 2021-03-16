@@ -119,96 +119,96 @@ class Header extends React.Component {
       />
     );
   }
-  renderOptions = () => {
-    const { navigation, optionLeft, optionRight } = this.props;
+renderOptions = () => {
+  const { navigation, optionLeft, optionRight } = this.props;
 
-    return (
-      <Block row style={styles.options}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
-            <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
-            <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
-          </Block>
-        </Button>
-      </Block>
-    );
-  }
-  renderTabs = () => {
-    const { tabs, tabIndex, navigation } = this.props;
-    const defaultTab = tabs && tabs[0] && tabs[0].id;
-
-    if (!tabs) return null;
-
-    return (
-      <Tabs
-        data={tabs || []}
-        initialIndex={tabIndex || defaultTab}
-        onChange={id => navigation.setParams({ tabId: id })} />
-    )
-  }
-  renderHeader = () => {
-    const { search, options, tabs } = this.props;
-    if (search || tabs || options) {
-      return (
-        <Block center>
-          {search ? this.renderSearch() : null}
-          {options ? this.renderOptions() : null}
-          {tabs ? this.renderTabs() : null}
+  return (
+    <Block row style={styles.options}>
+      <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+        <Block row middle>
+          <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
+          <Text size={16} style={styles.tabTitle}>{optionLeft || 'Beauty'}</Text>
         </Block>
-      );
-    }
-  }
+      </Button>
+      <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+        <Block row middle>
+          <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
+          <Text size={16} style={styles.tabTitle}>{optionRight || 'Fashion'}</Text>
+        </Block>
+      </Button>
+    </Block>
+  );
+}
+renderTabs = () => {
+  const { tabs, tabIndex, navigation } = this.props;
+  const defaultTab = tabs && tabs[0] && tabs[0].id;
 
-  render() {
-    const { back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
+  if (!tabs) return null;
 
-    const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
-    const headerStyles = [
-      !noShadow ? styles.shadow : null,
-      transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
-    ];
-
-    const navbarStyles = [
-      styles.navbar,
-      bgColor && { backgroundColor: 'rgba(0,0,0,0)' }
-    ];
-
+  return (
+    <Tabs
+      data={tabs || []}
+      initialIndex={tabIndex || defaultTab}
+      onChange={id => navigation.setParams({ tabId: id })} />
+  )
+}
+renderHeader = () => {
+  const { search, options, tabs } = this.props;
+  if (search || tabs || options) {
     return (
-      <Block style={headerStyles}>
-        <NavBar
-          back={false}
-          title={title}
-          style={navbarStyles}
-          transparent={transparent}
-          right={this.renderRight()}
-          rightStyle={{ alignItems: 'center' }}
-          left={
-            <Icon
-              name={back ? 'chevron-left' : "menu"} family="entypo"
-              size={20} onPress={this.handleLeftPress}
-              color={iconColor || (white ? argonTheme.COLORS.WHITE : argonTheme.COLORS.ICON)}
-              style={{ marginTop: 2 }}
-            />
-
-          }
-          leftStyle={{ paddingVertical: 12, flex: 0.2 }}
-          titleStyle={[
-            styles.title,
-            { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
-            titleColor && { color: titleColor }
-          ]}
-          {...props}
-        />
-        {this.renderHeader()}
+      <Block center>
+        {search ? this.renderSearch() : null}
+        {options ? this.renderOptions() : null}
+        {tabs ? this.renderTabs() : null}
       </Block>
     );
   }
+}
+
+render() {
+  const { back, title, white, transparent, bgColor, iconColor, titleColor, navigation, ...props } = this.props;
+
+  const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
+  const headerStyles = [
+    !noShadow ? styles.shadow : null,
+    transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
+  ];
+
+  const navbarStyles = [
+    styles.navbar,
+    bgColor && { backgroundColor: 'rgba(0,0,0,0)' }
+  ];
+
+  return (
+    <Block style={headerStyles}>
+      <NavBar
+        back={false}
+        title={title}
+        style={navbarStyles}
+        transparent={transparent}
+        right={this.renderRight()}
+        rightStyle={{ alignItems: 'center' }}
+        left={
+          <Icon
+            name={back ? 'chevron-left' : "menu"} family="entypo"
+            size={20} onPress={this.handleLeftPress}
+            color={iconColor || (white ? argonTheme.COLORS.WHITE : argonTheme.COLORS.ICON)}
+            style={{ marginTop: 2 }}
+          />
+
+        }
+        leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+        titleStyle={[
+          styles.title,
+          { color: argonTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
+          titleColor && { color: titleColor }
+        ]}
+        {...props}
+      />
+      {this.renderHeader()}
+    </Block>
+  );
+}
 }
 
 const styles = StyleSheet.create({

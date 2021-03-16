@@ -84,7 +84,7 @@ class Profile extends React.Component {
                         <Text
                           size={18}
                           color="#FFFFFF"
-                          style={{ textAlign: "left", marginTop: 20, marginHorizontal: 16, width: 700  }}
+                          style={{ textAlign: "left", marginTop: 20, marginHorizontal: 16, width: 700 }}
                         >
                           The authoritative point-of-care medical reference for healthcare professionals in Zimbabwe.
                     </Text>
@@ -322,8 +322,8 @@ const styles = StyleSheet.create({
     width: 650,
     borderWidth: 1,
     borderColor: "#FFFFFF",
-    marginTop:20,
-    marginLeft:20
+    marginTop: 20,
+    marginLeft: 20
   },
   thumb: {
     borderRadius: 4,

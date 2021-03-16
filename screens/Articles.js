@@ -1,311 +1,100 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, View } from 'react-native';
+import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, Linking } from 'react-native';
+import { Block, Button, Text, theme } from 'galio-framework';
 
-// Galio components
-import { Block, Text, Button as GaButton, theme } from "galio-framework";
+const { height, width } = Dimensions.get('screen');
+import { Images, argonTheme } from '../constants';
+import { HeaderHeight } from "../constants/utils";
 
-// Argon themed components
-import { argonTheme, tabs } from "../constants";
-import { Button, Select, Icon, Input, Header, Switch } from "../components/";
-
-import * as SQLite from "expo-sqlite";
-import { SearchBar } from 'react-native-elements';
-
-const db = SQLite.openDatabase("db.db");
-let menuItem = [];
-let subConditions = [];
-
-const { width } = Dimensions.get('screen');
-
-class Articles extends React.Component {
-
-  constructor(props) {
-    super(props);
-    //setting default state
-    this.state = { isLoading: true, search: '', subCondition: '' };
-    this.arrayholder = [];
-  }
-
-  componentDidMount() {
-
-    db.transaction((tx) => {
-      tx.executeSql("select content from tbl_drug", [], (_, { rows }) => {
-        if (rows.length > 0) {
-          let contentItem = JSON.parse(rows.item(0).content);
-          contentItem = contentItem.tbl_drug;
-          for (var i = 0; i < contentItem.length; i++) {
-            menuItem.push(contentItem[i]);
-          }
-          this.setState(
-            {
-              isLoading: false,
-              menuItem: menuItem,
-            },
-            function () {
-              this.arrayholder = menuItem;
-            }
-          );
-        }
-      });
-    });
-
-    // db.transaction(tx => {
-    //   tx.executeSql('SELECT id, title, content FROM tbl_sub_condition_rows', [],
-    //     (txObj, { rows }) => {
-    //       if (rows.length > 0) {
-    //         let menuItem = [];
-    //         for (var i = 0; i < rows.length; i++) {
-    //           menuItem.push(rows.item(i));
-    //         }
-    //         this.setState(
-    //           {
-    //             isLoading: false,
-    //             menuItem: menuItem,
-    //           },
-    //           function () {
-    //             this.arrayholder = menuItem;
-    //           }
-    //         );
-    //       }
-    //     },
-    //     (txObj, error) => console.log('Error ', error)
-    //   )
-    // })
-
-  }
-
-  search = text => {
-    console.log(text);
-  };
-
-  clear = () => {
-    this.search.clear();
-  };
-
-  _strCount(main_str, sub_str) {
-    main_str += '';
-    sub_str += '';
-
-    if (sub_str.length <= 0) {
-      return main_str.length + 1;
-    }
-
-    let subStr = sub_str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return (main_str.match(new RegExp(subStr, 'gi')) || []).length;
-  }
-
-  SearchFilterFunction(text) {
-    console.log(text);
-    const newData = this.arrayholder.filter(function (item) {
-      const textData = text.toUpperCase();
-
-      console.log(textData);
-      // search parameters
-      let item_medicine_title = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-      const item_patient_info = item.patient_info ? item.patient_info.toUpperCase() : ''.toUpperCase();
-      const item_dosage_adults = item.dosage_adults ? item.dosage_adults.toUpperCase() : ''.toUpperCase();
-      const item_dosage_paeds = item.dosage_paeds ? item.dosage_paeds.toUpperCase() : ''.toUpperCase();
-      const item_pregnancy = item.pregnancy ? item.pregnancy.toUpperCase() : ''.toUpperCase();
-      const item_adverse_effects = item.adverse_effects ? item.adverse_effects.toUpperCase() : ''.toUpperCase();
-      const item_warnings_black_box = item.warnings_black_box ? item.warnings_black_box.toUpperCase() : ''.toUpperCase();
-      const item_warnings_contraindications = item.warnings_contraindications ? item.warnings_contraindications.toUpperCase() : ''.toUpperCase();
-      const item_warnings_cautions = item.warnings_cautions ? item.warnings_cautions.toUpperCase() : ''.toUpperCase();
-
-      // allow multi word search - still buggy
-      item_medicine_title = item_medicine_title.replace(/\+/g, " "); item_medicine_title = unescape(item_medicine_title).trim();
-      // item_patient_info = decodeURIComponent(item_patient_info.replace(/\+/g, "%20"));
-      // item_dosage_adults = decodeURIComponent(item_dosage_adults.replace(/\+/g, "%20"));
-      // item_dosage_adults = decodeURIComponent(item_dosage_adults.replace(/\+/g, "%20"));
-      // item_dosage_paeds = decodeURIComponent(item_dosage_paeds.replace(/\+/g, "%20"));
-      // item_pregnancy = decodeURIComponent(item_pregnancy.replace(/\+/g, "%20"));
-      // item_adverse_effects = decodeURIComponent(item_adverse_effects.replace(/\+/g, "%20"));
-      // item_warnings_black_box = decodeURIComponent(item_warnings_black_box.replace(/\+/g, "%20"));
-      // item_warnings_contraindications = decodeURIComponent(item_warnings_contraindications.replace(/\+/g, "%20"));
-      // item_warnings_cautions = decodeURIComponent(item_warnings_cautions.replace(/\+/g, "%20"));
-
-      //  lets count the occurances
-      let count = -1;
-      if ((item_medicine_title.indexOf(textData) > -1)
-        || (item_patient_info.indexOf(textData) > -1)
-        || (item_dosage_adults.indexOf(textData) > -1)
-        || (item_dosage_paeds.indexOf(textData) > -1)
-        || (item_pregnancy.indexOf(textData) > -1)
-        || (item_adverse_effects.indexOf(textData) > -1)
-        || (item_warnings_black_box.indexOf(textData) > -1)
-        || (item_warnings_contraindications.indexOf(textData) > -1)
-        || (item_warnings_cautions.indexOf(textData) > -1)) { count = 1; }
-      return count > -1;
-    });
-
-    let summarizedResults = [];
-    for (var i = 0; i < newData.length; i++) {
-      let content_count = 0;
-      let title = newData[i].title.replace(/\+/g, " "); title = unescape(title).trim();
-      let title_count = this._strCount(title, text);
-
-      content_count =
-        this._strCount(newData[i].patient_info, text) +
-        this._strCount(newData[i].dosage_adults, text) +
-        this._strCount(newData[i].dosage_paeds, text) +
-        this._strCount(newData[i].pregnancy, text) +
-        this._strCount(newData[i].adverse_effects, text) +
-        this._strCount(newData[i].warnings_black_box, text) +
-        this._strCount(newData[i].warnings_contraindications, text) +
-        this._strCount(newData[i].warnings_cautions, text);
-
-      summarizedResults.push({
-        "id": newData[i].id, "title": title, "content": newData,
-        "title_count": title_count, "content_count": content_count, "type": "medicine"
-      });
-    }
-
-    summarizedResults.sort((a, b) => b.title_count - a.title_count);
-    this.setState({
-      menuItem: summarizedResults,
-      search: text,
-    });
-
-  }
-
-  ItemView = ({ item }) => {
-    const summary = item.title_count + item.content_count + ' matches found';
-    return (
-      // Flat List Item
-      <View>
-        <Text bold size={18} style={styles.title} onPress={() => {
-          db.transaction(tx => {
-            tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
-              (txObj, { rows }) => {
-                if (rows.length > 0) {
-                  console.log(rows.item(0).title);
-                  // this.props.navigation.push("DiseaseConditionDetail", {
-                  //   condition_id: item.id,
-                  //   condition_title: item.title,
-                  //   condition_content: item.content,
-                  //   condition_category: 'Diseases and Conditions',
-                  // });
-                }
-              },
-              (txObj, error) => console.log('Error ', error)
-            )
-          });
-        }}>
-          {item.title}
-        </Text>
-        <Text muted style={styles.subtitle}>{summary} </Text>
-      </View>
-    );
-  }
-
-  ItemSeparatorView = () => {
-    return (
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: '#C8C8C8',
-        }}
-      />
-    );
-  }
-
+export default class Articles extends React.Component {
   render() {
-    return (
+    const { navigation } = this.props;
 
-      <Block flex style={styles.home}>
-        <View
-          style={{
-            top: 0,
-            width: '100%',
-            backgroundColor: '#1E1C24',
-          }}
-        >
-          <Text bold size={28} style={styles.header_title}>
-            Diseases and Conditions
-          </Text>
-          <Text muted size={15} style={styles.header_subtitle}>This is a muted paragraph.</Text>
-        </View>
-        <SearchBar
-          round
-          searchIcon={{ size: 24 }}
-          onChangeText={text => this.SearchFilterFunction(text)}
-          onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here to Search"
-          value={this.state.search}
-          containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
-        />
-        <View
-          style={{
-            top: 0,
-            width: '100%',
-            backgroundColor: '#1E1C24',
-          }}
-        >
-          <Text bold size={28} style={styles.header_title}>
-            Results
-          </Text>
-          <Text muted size={15} style={styles.header_subtitle}>This is a muted paragraph.</Text>
-        </View>
-        <Block row space="evenly">
-          <Block flex left style={{ marginTop: 8 }}>
-            <Select
-              defaultIndex={1}
-              options={["01", "02", "03", "04", "05"]}
-            />
-          </Block>
-          <Block flex center>
-            <Button small center color="default" style={styles.optionsButton}>
-              DELETE
+    return (
+      <Block flex style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <Block flex>
+          <ImageBackground
+            source={Images.Articles}
+            style={{ flex: 1, height: height, width, zIndex: 1 }}
+          />
+          <Block space="between" style={styles.padded}>
+            <Block>
+              <Block>
+                <Image source={Images.ArgonLogo}
+                  style={{ marginBottom: theme.SIZES.BASE * 1.5 }}/>
+              </Block>
+              <Block >
+                <Block>
+                  <Text color="white" size={60}>Argon</Text>
+                </Block>
+                <Block>
+                  <Text color="white" size={60}>Design</Text>
+                </Block>
+                <Block row>
+                  <Text color="white" size={60}>System</Text>
+                  <Block middle style={styles.pro}>
+                    <Text size={16} color="white">PRO</Text>
+                  </Block>
+                </Block>
+              </Block>
+              <Text size={16} color='rgba(255,255,255,0.6)' style={{ marginTop: 35 }}>
+                Take advantage of all the features and screens made upon Galio Design System, coded on React Native for both.
+              </Text>
+              <Block row style={{ marginTop: theme.SIZES.BASE * 1.5, marginBottom: theme.SIZES.BASE * 4 }}>
+                <Image
+                  source={Images.iOSLogo}
+                  style={{ height: 38, width: 82, marginRight: theme.SIZES.BASE * 1.5 }} />
+                <Image
+                  source={Images.androidLogo}
+                  style={{ height: 38, width: 140 }} />
+              </Block>
+              <Button
+                shadowless
+                style={styles.button}
+                color={argonTheme.COLORS.INFO}
+                onPress={() => Linking.openURL('https://www.creative-tim.com/product/argon-pro-react-native').catch((err) => console.error('An error occurred', err))}>
+                <Text bold color={theme.COLORS.WHITE}>BUY NOW</Text>
               </Button>
-          </Block>
-          <Block flex={1.25} right>
-            <Button center color="default" style={styles.optionsButton}>
-              SAVE FOR LATER
-              </Button>
+            </Block>
           </Block>
         </Block>
-        <FlatList
-          data={this.state.menuItem}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={this.ItemSeparatorView}
-          renderItem={this.ItemView}
-        />
       </Block>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  home: {
-    width: width,
-    backgroundColor: 'white',
+  container: {
+    backgroundColor: theme.COLORS.BLACK,
+    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
   },
-  articles: {
-    width: width - theme.SIZES.BASE * 2,
-    paddingVertical: theme.SIZES.BASE,
-  },
-  title: {
+  padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
-    marginTop: 10,
-    color: argonTheme.COLORS.HEADER
+    zIndex: 3,
+    position: 'absolute',
+    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
   },
-  subtitle: {
-    paddingBottom: theme.SIZES.BASE,
-    paddingHorizontal: theme.SIZES.BASE * 2,
-    marginTop: 4,
-    color: argonTheme.COLORS.HEADER
+  button: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
   },
-  header_title: {
-    paddingHorizontal: theme.SIZES.BASE * 1,
-    marginTop: 10,
-    color: '#FFFFFF'
+  pro: {
+    backgroundColor: argonTheme.COLORS.INFO,
+    paddingHorizontal: 8,
+    marginLeft: 3,
+    borderRadius: 4,
+    height: 22,
+    marginTop: 15
   },
-  header_subtitle: {
-    paddingBottom: theme.SIZES.BASE,
-    paddingHorizontal: theme.SIZES.BASE * 1,
-    marginTop: 4,
-    color: argonTheme.COLORS.ACTIVE
+  gradient: {
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 66,
   },
 });
-
-export default Articles;

@@ -1,10 +1,10 @@
 import React from "react";
-import { ScrollView, StyleSheet, Dimensions, TouchableOpacity, Linking } from "react-native";
+import { ScrollView, StyleSheet, Dimensions, Linking } from "react-native";
 // Galio components
-import { Block, Text, Button as GaButton, theme } from "galio-framework";
+import { Block, Text, theme } from "galio-framework";
 // Argon themed components
-import { argonTheme, tabs } from "../constants";
-import { Button, Select, Icon, Input, Header, Switch } from "../components";
+import { argonTheme } from "../constants";
+import { Button } from "../components";
 
 const { width } = Dimensions.get("screen");
 

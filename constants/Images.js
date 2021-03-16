@@ -45,7 +45,7 @@ const MainMenu = [
 ];
 
 const MainMenuRefence = [
-  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Access monographs for prescription and over-the-counter drugs, as well as for corresponding brand-name drugs, herbals, and supplements...', 'navigateTo': 'MedicineCategories', 'type': 'page' },
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Access monographs for prescription and over-the-counter drugs, as well as for corresponding brand-name drugs, herbals, and supplements...', 'navigateTo': 'MedicineCategoriesBigScreen', 'type': 'page' },
   { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Disease and condition articles are organized to rapidly and comprehensively answer clinical questions and to provide in-depth information...', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
   { 'id': 2, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search', 'navigateTo': 'GlobalSearch', 'type': 'page' },
   { 'id': 3, 'icon': publications, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' }

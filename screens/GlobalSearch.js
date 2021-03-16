@@ -6,6 +6,8 @@ import { Block, Text, theme } from "galio-framework";
 
 // Argon themed components
 import { argonTheme } from "../constants";
+import { Button } from "../components";
+
 import Images from "../constants/Images";
 
 import * as SQLite from "expo-sqlite";
@@ -129,7 +131,6 @@ class GlobalSearch extends React.Component {
 
   render() {
     return (
-
       <Block flex style={styles.home}>
         <View
           style={{
@@ -186,7 +187,10 @@ class GlobalSearch extends React.Component {
             }}
           >
             <Image source={Images.icon_resources} style={{ alignSelf: 'center', marginTop: 20, marginBottom: 16, height: 64, width: 64 }} />
-            <Text bold size={16} style={{ textAlign: 'center', marginBottom: 8, marginHorizontal: 20, color: argonTheme.COLORS.HEADER }}>Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search. To search, simply type in the serach box above.</Text>
+            <Text bold size={16} style={{ textAlign: 'center', marginBottom: 8, marginHorizontal: 20, color: argonTheme.COLORS.HEADER }}>Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search. To search, simply type in the search box above.</Text>
+            <Block center>
+              <Button color="default" style={styles.button} onPress={() => { this.props.navigation.push("GlobalSearchMedicine"); }} >Search in Medicines Only</Button>
+            </Block>
           </View>
         }
 
@@ -225,6 +229,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.SIZES.BASE * 1,
     marginTop: 4,
     color: argonTheme.COLORS.ACTIVE
+  },
+  shadow: {
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 0.2,
+    elevation: 2
+  },
+  button: {
+    marginBottom: theme.SIZES.BASE,
+    width: 260
   },
 });
 

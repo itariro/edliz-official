@@ -10,7 +10,7 @@ import { Block, theme } from "galio-framework";
 // screens
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
-import Pro from "../screens/Pro";
+import Pro from "../screens/Articles";
 import Profile from "../screens/Profile";
 import Register from "../screens/Register";
 import Elements from "../screens/Elements";
@@ -36,6 +36,10 @@ import InstitutionDetail from "../screens/InstitutionDetail";
 import Settings from "../screens/Settings";
 import GlobalSearch from "../screens/GlobalSearch";
 import Update from "../screens/Update";
+
+import GlobalSearchMedicine from "../screens/GlobalSearchMedicine";
+import MedicineCategoriesBigScreen from "../screens/MedicineCategoriesBigScreen";
+import MedicineDetailBigScreen from "../screens/MedicineDetailBigScreen";
 
 // drawer
 import CustomDrawerContent from "./Menu";
@@ -209,7 +213,7 @@ function ProfileStack(props) {
         component={MedicineCategories}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Medicine Categories" navigation={navigation} scene={scene} back white style={{
+            <Header title="Medicines" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
@@ -399,6 +403,48 @@ function ProfileStack(props) {
               navigation={navigation}
               scene={scene}
             />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="GlobalSearchMedicine"
+        component={GlobalSearchMedicine}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Smart Search - Medicines" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="MedicineCategoriesBigScreen"
+        component={MedicineCategoriesBigScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Medicines" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="MedicineDetailBigScreen"
+        component={MedicineDetailBigScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Medicine" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
           ),
           headerTransparent: true
         }}

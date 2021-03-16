@@ -44,19 +44,25 @@ const MainMenu = [
   { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch' }
 ];
 
-const MainMenuBigScreens = [
-  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories', 'type': 'page' },
-  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
-  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': '', 'navigateTo': 'Resources', 'type': 'page' },
-  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch', 'type': 'page' },
-  { 'id': 4, 'icon': publications, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' },
-  { 'id': 5, 'icon': institutions, 'title': 'Institutions', 'description': 'Directory of approved suppliers', 'navigateTo': 'Institutions', 'type': 'page' },
-  { 'id': 6, 'icon': suppliers, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
-  { 'id': 7, 'icon': guides, 'title': 'Guides and Calculators', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
-  { 'id': 8, 'icon': update, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Update', 'type': 'page' },
-  { 'id': 9, 'icon': terms, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
-  { 'id': 10, 'icon': feedback, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
+const MainMenuRefence = [
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Access monographs for prescription and over-the-counter drugs, as well as for corresponding brand-name drugs, herbals, and supplements...', 'navigateTo': 'MedicineCategories', 'type': 'page' },
+  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Disease and condition articles are organized to rapidly and comprehensively answer clinical questions and to provide in-depth information...', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
+  { 'id': 2, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search', 'navigateTo': 'GlobalSearch', 'type': 'page' },
+  { 'id': 3, 'icon': publications, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' }
+];
 
+const MainMenuTools = [
+  { 'id': 0, 'icon': guides, 'title': 'Guides and Calculators', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
+  { 'id': 1, 'icon': institutions, 'title': 'Institutions', 'description': 'Directory of approved suppliers', 'navigateTo': 'Institutions', 'type': 'page' },
+  { 'id': 2, 'icon': suppliers, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
+  { 'id': 3, 'icon': suppliers, 'title': 'More', 'description': 'View more options', 'navigateTo': 'Resources', 'type': 'page' },
+];
+
+const MainMenuSupport = [
+  { 'id': 0, 'icon': feedback, 'title': 'Reporting an Adverse Medicine Reaction', 'description': 'Use this tool to submit a report an Adverse Drug Reaction', 'navigateTo': 'https://e-pv.mcaz.co.zw/', 'type': 'url' },
+  { 'id': 1, 'icon': update, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Update', 'type': 'page' },
+  { 'id': 2, 'icon': terms, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
+  { 'id': 3, 'icon': feedback, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
 ];
 
 const Products = {
@@ -79,5 +85,7 @@ export default {
   MoHCCCoatOfArms,
   MainMenu,
   icon_resources,
-  MainMenuBigScreens
+  MainMenuRefence,
+  MainMenuTools,
+  MainMenuSupport
 };

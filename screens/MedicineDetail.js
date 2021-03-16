@@ -51,7 +51,6 @@ class MedicineDetail extends React.Component {
                 "</tr>";
             }
           }
-
           formulationTable = base64.encode('<h3>Formulations</h3><table style="width:100%" >' + formulationTable + '</table>');
           forms = formulationTable;
           ////console.log(formulationTable);

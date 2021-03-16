@@ -186,7 +186,7 @@ class GlobalSearch extends React.Component {
             }}
           >
             <Image source={Images.icon_resources} style={{ alignSelf: 'center', marginTop: 20, marginBottom: 16, height: 64, width: 64 }} />
-            <Text bold size={16} style={{ textAlign: 'center', marginBottom: 8, marginHorizontal: 20, color: argonTheme.COLORS.HEADER }}>Quickly dig through thousands of our drug, disease and condition information using the EDLIZ Smart Search. To search, simply type in the serach box above.</Text>
+            <Text bold size={16} style={{ textAlign: 'center', marginBottom: 8, marginHorizontal: 20, color: argonTheme.COLORS.HEADER }}>Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search. To search, simply type in the serach box above.</Text>
           </View>
         }
 

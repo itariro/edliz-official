@@ -12,12 +12,12 @@ class BMICalculator extends React.Component {
   state = {
     height: 0,
     mass: 0,
-    resultNumber: 0,
-    resultText: "",
+    resultNumber: '--',
+    resultText: '',
   };
 
   handleCalculate = () => {
-    let imc = (this.state.mass * 703) / this.state.height ** 2;
+    let imc = this.state.mass / this.state.height ** 2;
     this.setState({
       resultNumber: imc.toFixed(2),
     });
@@ -53,7 +53,7 @@ class BMICalculator extends React.Component {
           >
             {this.state.resultText}
           </Text>
-          <Text muted>This calculator computes the body mass index and rates it appropriately for men, women, children, juveniles and seniors.</Text>
+          <Text muted style={{ marginBottom: theme.SIZES.BASE / 2, textAlign: "center" }}>This calculator computes the body mass index and rates it appropriately for men, women, children, juveniles and seniors.</Text>
         </Block>
       </Block>
     );
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   title: {
     paddingBottom: 4,
     paddingHorizontal: theme.SIZES.BASE * 1,
-    marginTop: 44,
+    marginTop: 8,
     color: argonTheme.COLORS.HEADER
   },
   group: {

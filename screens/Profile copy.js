@@ -16,7 +16,7 @@ import { HeaderHeight } from "../constants/utils";
 
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 2;
-const thumbMeasureHeight = (width - 48 - 32) / 2;
+const thumbMeasureHeight = (width - 48 - 32) / 2.5;
 
 const thumbMeasureBigScreens = (width - 48 - 32) / 4;
 const thumbMeasureBigScreensHeight = (width - 48 - 32) / 4.5;
@@ -181,7 +181,7 @@ class Profile extends React.Component {
                 >
                   <ScrollView
                     showsVerticalScrollIndicator={false}
-                    style={{ width, marginTop: '5%' }}
+                    style={{ width, marginTop: '25%' }}
                   >
                     <Block middle style={styles.avatarContainer}>
                       <Image
@@ -232,10 +232,9 @@ class Profile extends React.Component {
                                   <Image
                                     key={img.id}
                                     source={img.icon}
-                                    style={{ alignSelf: 'center', marginTop: 10, height: 40, width: 40 }}
+                                    style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
                                   />
-                                  <Text bold size={16} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginHorizontal: 4 }}>{img.title}</Text>
-                                  <Text muted size={12} style={{ textAlign: 'center', marginTop: 4, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
+                                  <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 4 }}>{img.title}</Text>
                                 </TouchableOpacity>
                               </Block>
                             ))}

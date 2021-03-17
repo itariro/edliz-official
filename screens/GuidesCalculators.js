@@ -10,7 +10,7 @@ import { SearchBar } from 'react-native-elements';
 const { width } = Dimensions.get('screen');
 
 let menuItem = [
-  { 'id': 0, 'title': 'BMI', 'description': 'This calculator computes the body mass index and rates it appropriately for men, women, children, juveniles and seniors.', 'navigateTo': 'BMICalculator', 'type': 'page' },
+  { 'id': 0, 'title': 'Body Mass Index', 'description': 'This calculator computes the body mass index and rates it appropriately for men, women, children, juveniles and seniors.', 'navigateTo': 'BMICalculator', 'type': 'page' },
   { 'id': 1, 'title': 'Reporting an Adverse Medicine Reaction', 'description': 'Use this tool to submit a report an Adverse Drug Reaction', 'navigateTo': 'https://e-pv.mcaz.co.zw/', 'type': 'url' }
 ];
 

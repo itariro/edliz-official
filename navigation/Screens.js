@@ -325,7 +325,7 @@ function ProfileStack(props) {
         component={BMICalculator}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="BMICalculator" navigation={navigation} scene={scene} back white style={{
+            <Header title="BMI Calculator" navigation={navigation} scene={scene} back white style={{
               backgroundColor: '#1E1C24', paddingVertical: 0,
               paddingBottom: theme.SIZES.BASE * 1.5,
               paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE

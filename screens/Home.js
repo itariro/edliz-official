@@ -164,7 +164,6 @@ class Home extends React.Component {
 
   render() {
     return (
-
       <Block flex style={styles.home}>
         <View
           style={{

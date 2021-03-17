@@ -47,6 +47,10 @@ class MedicineCategories extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    selectedCategory = '';
+  }
+
   ItemView = ({ item }) => {
     let medicineTitle = item.title;
     medicineTitle = decodeURIComponent(medicineTitle.replace(/\+/g, "%20"));
@@ -170,6 +174,7 @@ class MedicineCategories extends React.Component {
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={this.ItemSeparatorView}
                 renderItem={this.ItemView}
+                style={{ marginTop: 50, height: '100%' }}
               />
             </Block>
           </View>
@@ -198,6 +203,7 @@ class MedicineCategories extends React.Component {
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={this.ItemSeparatorView}
                 renderItem={this.ItemViewMedicine}
+                style={{ height: '100%' }}
               />
             </View>
           </View>

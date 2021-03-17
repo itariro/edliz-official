@@ -31,17 +31,16 @@ class PublicationDetail extends React.Component {
           </Text>
           <Text
             muted
-            style={{ marginBottom: 16 }}
-            color={argonTheme.COLORS.DEFAULT}
+            style={{ marginBottom: 15 }}
+            color={argonTheme.COLORS.GRAY}
             size={16}
           >
             {this.state.content.detail.description}
           </Text>
-          <Text bold size={16} style={styles.title}>Download the resource</Text>
         </Block>
         <Block center>
           <Button color="default" style={styles.button} onPress={() => {
-            Linking.openURL('https://wwww.padendere.co.zw/' + this.state.content.detail.url).catch((err) => console.error('An error occurred', err));
+            Linking.openURL('https://www.padendere.co.zw/edlizadmin/' + this.state.content.detail.url).catch((err) => console.error('An error occurred', err));
           }} >
             Download Resource
             </Button>

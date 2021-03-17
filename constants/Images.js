@@ -38,14 +38,14 @@ const Viewed = [
 
 //menu 
 const MainMenu = [
-  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': '', 'navigateTo': 'MedicineCategories' },
-  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': '', 'navigateTo': 'DiseaseConditions' },
-  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': '', 'navigateTo': 'Resources' },
-  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': '', 'navigateTo': 'GlobalSearch' }
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Monographs for prescription and OTC medicine, herbals, and supplements', 'navigateTo': 'MedicineCategories' },
+  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Comprehensively answer clinical questions on diseases and conditions', 'navigateTo': 'DiseaseConditions' },
+  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'Resources' },
+  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of medicine, disease and condition information', 'navigateTo': 'GlobalSearch' }
 ];
 
 const MainMenuRefence = [
-  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Access monographs for prescription and over-the-counter drugs, as well as for corresponding brand-name drugs, herbals, and supplements...', 'navigateTo': 'MedicineCategoriesBigScreen', 'type': 'page' },
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Access monographs for prescription and over-the-counter medicine, as well as for corresponding brand-name medicine, herbals, and supplements...', 'navigateTo': 'MedicineCategoriesBigScreen', 'type': 'page' },
   { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Disease and condition articles are organized to rapidly and comprehensively answer clinical questions and to provide in-depth information...', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
   { 'id': 2, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of our medicine, disease and condition information using the EDLIZ Smart Search', 'navigateTo': 'GlobalSearch', 'type': 'page' },
   { 'id': 3, 'icon': publications, 'title': 'Publications', 'description': 'Library of publications, articles, research and additional resources.', 'navigateTo': 'Publications', 'type': 'page' }

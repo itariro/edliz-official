@@ -1,7 +1,6 @@
-# [EDLIZ Mobile App](https://creativetimofficial.github.io/argon-react-native/docs/#))
+# EDLIZ Mobile App
 
-
- ![version](https://img.shields.io/badge/version-1.7.0-blue.svg)  [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/argon-react-native.svg?style=flat)](https://github.com/creativetimofficial/argon-react-native/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/argon-react-native.svg?maxAge=2592000)](https://github.com/creativetimofficial/argon-react-native/issues?q=is%3Aissue+is%3Aclosed)
+ ![version](https://img.shields.io/badge/version-1.7.1-blue.svg)
 
 EDLIZ Mobile App is a fully coded app template built over [Galio.io](https://galio.io/?ref=creativetim), [React Native](https://facebook.github.io/react-native/?ref=creativetim) and [Expo](https://expo.io/?ref=creativetim) to allow you to create powerful and beautiful e-commerce mobile applications. We have redesigned all the usual components in Galio to make it look like Argon's Design System, minimalistic and easy to use.
 

@@ -23,8 +23,7 @@ const update = require("../assets/icons/gear.png");
 const terms = require("../assets/icons/computer.png");
 const feedback = require("../assets/icons/advertising.png");
 const publications = require("../assets/icons/knowledge.png");
-
-
+const more = require("../assets/icons/wholesale.png");
 
 // internet imgs
 const Viewed = [
@@ -55,7 +54,7 @@ const MainMenuTools = [
   { 'id': 0, 'icon': guides, 'title': 'Guides and Calculators', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'GuidesCalculators', 'type': 'page' },
   { 'id': 1, 'icon': institutions, 'title': 'Institutions', 'description': 'Directory of approved suppliers', 'navigateTo': 'Institutions', 'type': 'page' },
   { 'id': 2, 'icon': suppliers, 'title': 'Approved Suppliers', 'description': 'Directory of approved suppliers', 'navigateTo': 'Suppliers', 'type': 'page' },
-  { 'id': 3, 'icon': suppliers, 'title': 'More', 'description': 'View more options', 'navigateTo': 'Resources', 'type': 'page' },
+  { 'id': 3, 'icon': more, 'title': 'More', 'description': 'View more options', 'navigateTo': 'Resources', 'type': 'page' },
 ];
 
 const MainMenuSupport = [

@@ -4,33 +4,66 @@ import { StyleSheet, Dimensions, FlatList, View, Image } from 'react-native';
 // Galio components
 import { Block, Text, theme } from "galio-framework";
 // Argon themed components
-import { argonTheme, Images } from "../constants";
+import { argonTheme, Images, Template } from "../constants";
+import WebView from "react-native-webview";
+import base64 from 'react-native-base64'
 import { Input } from "../components/";
 import * as SQLite from "expo-sqlite";
+import { SearchBar } from 'react-native-elements';
 
 const db = SQLite.openDatabase("db.db");
-const { width } = Dimensions.get('screen');
 let menuItem = [];
-let menuItemMedicine = [];
+let subConditions = [];
 let selectedCategory = '';
 
-class MedicineCategories extends React.Component {
+const { width } = Dimensions.get('screen');
+
+
+const getItem = (item) => {
+  // Function for click on an item
+  alert('Id : ' + item.id + ' Title : ' + item.title);
+  db.transaction(tx => {
+    tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
+      (txObj, { rows }) => {
+        if (rows.length > 0) {
+          console.log(rows.item(0).title);
+          let subCond = {
+            condition_id: item.id,
+            condition_title: rows.item(0).title,
+            condition_content: rows.item(0).content,
+          };
+
+          this.state = { subCondition: subCond };
+
+          this.props.navigation.push("Pro", {
+            condition_id: item.id,
+            condition_title: rows.item(0).title,
+            condition_content: rows.item(0).content,
+          });
+        }
+      },
+      // failure callback which sends two things Transaction object and Error
+      (txObj, error) => console.log('Error ', error)
+    )
+  })
+};
+
+class DiseaseConditionsBigScreen extends React.Component {
 
   constructor(props) {
     super(props);
     //setting default state
-    this.state = { isLoading: true, search: '', menuItemMedicine: [] };
-    this.setState({ displayResults: false })
+    this.state = { isLoading: true, search: '', subCondition: '' };
     this.arrayholder = [];
   }
 
   componentDidMount() {
     db.transaction((tx) => {
-      tx.executeSql("select content from tbl_drug_category", [], (_, { rows }) => {
+      tx.executeSql("select * from tbl_condition", [], (_, { rows }) => {
         if (rows.length > 0) {
           // get all content
           const content = JSON.parse(rows.item(0).content);
-          menuItem = content.tbl_drug_category;
+          menuItem = content.tbl_condition;
           menuItem.sort((a, b) => a.id - b.id);
           this.setState(
             {
@@ -46,54 +79,6 @@ class MedicineCategories extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    selectedCategory = '';
-  }
-
-  ItemView = ({ item }) => {
-    let medicineTitle = item.title;
-    medicineTitle = decodeURIComponent(medicineTitle.replace(/\+/g, "%20"));
-    return (
-      <View>
-        <Text bold size={16} color="#525F7F" style={{ textAlign: 'left', marginTop: 15, marginBottom: 15, marginHorizontal: 4 }}
-          onPress={() => {
-            this._handleSelectedCategory(item);
-          }}>{medicineTitle.trim()}</Text>
-      </View>
-    );
-  }
-
-  // for selected medicine
-  _handleSelectedCategory = (item) => {
-    selectedCategory = item.title; menuItemMedicine = [];
-    db.transaction((tx) => {
-      tx.executeSql("select content from tbl_drug", [], (_, { rows }) => {
-        if (rows.length > 0) {
-          // get all content
-          let contentItem = JSON.parse(rows.item(0).content);
-          contentItem = contentItem.tbl_drug;
-          for (var i = 0; i < contentItem.length; i++) {
-            if (contentItem[i].category_id == item.id) {
-              menuItemMedicine.push(contentItem[i]);
-            }
-          }
-          menuItemMedicine.sort((a, b) => a.id - b.id);
-          this.setState(
-            {
-              isLoading: false,
-              menuItemMedicine: menuItemMedicine,
-            },
-            function () {
-              this.arrayholder = menuItemMedicine;
-            }
-          );
-        }
-      });
-    });
-    this.setState({ displayResults: true, search: '' })
-  }
-
-  // for medicine
   search = text => {
     console.log(text);
   };
@@ -103,7 +88,8 @@ class MedicineCategories extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    console.log(text);
+    this.setState({ displayResults: false })
+    if (text != '') { this.setState({ displayResults: true }) }
     const newData = this.arrayholder.filter(function (item) {
       const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -111,37 +97,56 @@ class MedicineCategories extends React.Component {
     });
 
     this.setState({
-      menuItemMedicine: newData,
+      menuItem: newData,
       search: text,
     });
   }
 
-  ItemViewMedicine = ({ item }) => {
-    let medicineTitle = item.title;
-    medicineTitle = decodeURIComponent(medicineTitle.replace(/\+/g, "%20"));
+  ItemView = ({ item }) => {
     return (
       <View>
-        <Text bold size={18} style={styles.title} onPress={() => {
-          this._handleNavigation(item);
-        }}>{medicineTitle}</Text>
-        <Text muted style={styles.subtitle} onPress={() => {
-          this._handleNavigation(item);
-        }}>{selectedCategory}</Text>
+        <Text bold size={18} style={styles.title} onPress={() => this._navigateTo(item)} >
+          {item.title}
+        </Text>
+        <Text muted style={styles.subtitle} onPress={() => this._navigateTo(item)}>Chapter {item.id}</Text>
       </View>
     );
   }
 
-  // for selected medicine
-  _handleNavigation = (item) => {
-    this.props.navigation.push("MedicineDetail", {
-      medicine: item,
-      category: selectedCategory
+  _navigateTo(item) {
+    db.transaction(tx => {
+      tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
+        (txObj, { rows }) => {
+          if (rows.length > 0) {
+            console.log(rows.item(0).title);
+
+            let contentDetail = rows.item(0).content;
+            contentDetail = decodeURIComponent(contentDetail.replace(/\+/g, "%20"));
+            contentDetail = contentDetail.replace(/<img/g, '<img class="img-responsive"');
+
+            selectedCategory =
+              base64.decode(Template.PAGE.TOP) + '<br><br><h2 class="blog-post-title">' + rows.item(0).title + '</h2>' +
+              '<p class="blog-post-meta">' + item.title + '</p><hr /><br>' + contentDetail +
+              base64.decode(Template.PAGE.BOTTOM);
+            this.setState({ content: selectedCategory });
+
+            // this.props.navigation.push("DiseaseConditionDetail", {
+            //   condition_id: item.id,
+            //   condition_title: rows.item(0).title,
+            //   condition_content: rows.item(0).content,
+            //   condition_category: item.title,
+            // });
+          }
+        },
+        // failure callback which sends two things Transaction object and Error
+        (txObj, error) => console.log('Error ', error)
+      )
     });
   }
 
-  // generic
   ItemSeparatorView = () => {
     return (
+      // Flat List Item Separator
       <View
         style={{
           height: 0.5,
@@ -154,6 +159,52 @@ class MedicineCategories extends React.Component {
 
   render() {
     const { navigation } = this.props;
+    // return (
+    //   <Block flex style={styles.home}>
+    //     <View
+    //       style={{
+    //         top: 0,
+    //         width: '100%',
+    //         backgroundColor: '#1E1C24',
+    //       }}
+    //     >
+    //       <Text bold size={28} style={styles.header_title}>
+    //         Diseases and Conditions
+    //       </Text>
+    //       <Text muted size={15} style={styles.header_subtitle}>This is a muted paragraph.</Text>
+    //     </View>
+    //     <SearchBar
+    //       round
+    //       searchIcon={{ size: 24 }}
+    //       onChangeText={text => this.SearchFilterFunction(text)}
+    //       onClear={text => this.SearchFilterFunction('')}
+    //       placeholder="Type Here to Search"
+    //       value={this.state.search}
+    //       containerStyle={{ color: '#1E1C24', backgroundColor: '#1E1C24', foregroundColor: '#5E72E4' }}
+    //     />
+    //     <View>
+    //       {this.state.displayResults &&
+    //         <View
+    //           style={{
+    //             top: 0,
+    //             width: '100%',
+    //             backgroundColor: '#E1F5FE',
+    //             justifyContent: 'center',
+    //             alignItems: 'center'
+    //           }}
+    //         >
+    //           <Text muted size={15} style={{ textAlign: 'center', marginBottom: 8, marginTop: 8, marginHorizontal: 20, color: '#0D47A1' }} onPress={() => navigation.navigate('GlobalSearch')}>Found what you are looking for? Tap here to switch to Smart Search for a more precise and in-depth search.</Text>
+    //         </View>
+    //       }
+    //       <FlatList
+    //         data={this.state.menuItem}
+    //         keyExtractor={(item, index) => index.toString()}
+    //         ItemSeparatorComponent={this.ItemSeparatorView}
+    //         renderItem={this.ItemView}
+    //       />
+    //     </View>
+    //   </Block>
+    // );
     return (
       <Block flex style={styles.home}>
 
@@ -165,7 +216,7 @@ class MedicineCategories extends React.Component {
                 source={Images.MainMenu[1].icon}
                 style={{ alignSelf: 'center', marginTop: 30, height: 64, width: 64 }}
               />
-              <Text bold size={17} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 4 }}>Medicines</Text>
+              <Text bold size={17} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 4 }}>Diseases and Conditions</Text>
               <Text muted size={14} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 4 }}>Access monographs for prescription and over-the-counter drugs, as well as for corresponding brand-name drugs, herbals, and supplements...</Text>
               <Block style={styles.divider} />
               <FlatList
@@ -212,12 +263,17 @@ class MedicineCategories extends React.Component {
                   <Text muted size={15} style={{ textAlign: 'center', marginBottom: 8, marginTop: 8, marginHorizontal: 20, color: '#0D47A1' }} onPress={() => navigation.navigate('GlobalSearchMedicine')}>Found what you are looking for? Tap here to switch to Smart Search for a more precise and in-depth search.</Text>
                 </View>
               }
-              <FlatList
-                data={this.state.menuItemMedicine}
-                keyExtractor={(item, index) => index.toString()}
-                ItemSeparatorComponent={this.ItemSeparatorView}
-                renderItem={this.ItemViewMedicine}
-                style={{ height: '100%' }}
+              <WebView
+                originWhitelist={['*']}
+                source={{ html: selectedCategory, baseUrl: '' }}
+                style={{ marginTop: 90 }}
+                allowFileAccess
+                allowingReadAccessToURL={'file://'}
+                allowUniversalAccessFromFileURLs
+                allowFileAccessFromFileURLs
+                mixedContentMode={'always'}
+                scalesPageToFit={true}
+                useWebKit
               />
             </View>
           </View>
@@ -258,33 +314,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     color: argonTheme.COLORS.ACTIVE
   },
-  divider: {
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "#E9ECEF"
-  },
-  input: {
-    borderBottomWidth: 1,
-    fontSize: 14
-  },
-  inputDefault: {
-    borderBottomColor: argonTheme.COLORS.PLACEHOLDER
-  },
-  inputTheme: {
-    borderBottomColor: argonTheme.COLORS.PRIMARY
-  },
-  inputInfo: {
-    borderBottomColor: argonTheme.COLORS.INFO
-  },
-  inputSuccess: {
-    borderBottomColor: argonTheme.COLORS.SUCCESS
-  },
-  inputWarning: {
-    borderBottomColor: argonTheme.COLORS.WARNING
-  },
-  inputDanger: {
-    borderBottomColor: argonTheme.COLORS.ERROR
-  }
 });
 
-export default MedicineCategories;
+export default DiseaseConditionsBigScreen;

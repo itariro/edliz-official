@@ -26,14 +26,16 @@ class PublicationDetail extends React.Component {
             h4
             style={{ marginBottom: theme.SIZES.BASE / 2 }}
             color={argonTheme.COLORS.DEFAULT}
+            style={{ textAlign: "left", marginTop: 30, marginBottom: 20 }}
           >
             {this.state.content.detail.title}
           </Text>
+          <Block style={styles.divider} />
           <Text
             muted
             style={{ marginBottom: 15 }}
             color={argonTheme.COLORS.GRAY}
-            size={16}
+            style={{ textAlign: "left", marginTop: 20, marginBottom: 20 }}
           >
             {this.state.content.detail.description}
           </Text>
@@ -84,32 +86,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.SIZES.BASE,
     paddingVertical: 10
   },
-  input: {
-    borderBottomWidth: 1
-  },
-  inputDefault: {
-    borderBottomColor: argonTheme.COLORS.PLACEHOLDER
-  },
-  inputTheme: {
-    borderBottomColor: argonTheme.COLORS.PRIMARY
-  },
-  inputInfo: {
-    borderBottomColor: argonTheme.COLORS.INFO
-  },
-  inputSuccess: {
-    borderBottomColor: argonTheme.COLORS.SUCCESS
-  },
-  inputWarning: {
-    borderBottomColor: argonTheme.COLORS.WARNING
-  },
-  inputDanger: {
-    borderBottomColor: argonTheme.COLORS.ERROR
-  },
-  social: {
-    width: theme.SIZES.BASE * 3.5,
-    height: theme.SIZES.BASE * 3.5,
-    borderRadius: theme.SIZES.BASE * 1.75,
-    justifyContent: "center"
+  divider: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#E9ECEF"
   },
 });
 

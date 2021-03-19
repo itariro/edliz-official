@@ -17,6 +17,7 @@ import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
 
 import DiseaseConditions from "../screens/DiseaseConditions";
+import DiseaseConditionsBigScreen from "../screens/DiseaseConditionsBigScreen";
 import DiseaseConditionDetail from "../screens/DiseaseConditionDetail";
 import Medicines from "../screens/Medicines";
 import MedicineCategories from "../screens/MedicineCategories";
@@ -141,7 +142,6 @@ function ProfileStack(props) {
               transparent
               white
               title=""
-              navigation={navigation}
               scene={scene}
             />
           ),
@@ -183,6 +183,20 @@ function ProfileStack(props) {
       <Stack.Screen
         name="DiseaseConditions"
         component={DiseaseConditions}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Diseases and Conditions" navigation={navigation} scene={scene} back white style={{
+              backgroundColor: '#1E1C24', paddingVertical: 0,
+              paddingBottom: theme.SIZES.BASE * 1.5,
+              paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE
+            }} />
+          ),
+          headerTransparent: true
+        }}
+      />
+      <Stack.Screen
+        name="DiseaseConditionsBigScreen"
+        component={DiseaseConditionsBigScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header title="Diseases and Conditions" navigation={navigation} scene={scene} back white style={{

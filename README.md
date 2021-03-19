@@ -2,9 +2,7 @@
 
  ![version](https://img.shields.io/badge/version-1.7.1-blue.svg)
 
-EDLIZ Mobile App is a fully coded app template built over [Galio.io](https://galio.io/?ref=creativetim), [React Native](https://facebook.github.io/react-native/?ref=creativetim) and [Expo](https://expo.io/?ref=creativetim) to allow you to create powerful and beautiful e-commerce mobile applications. We have redesigned all the usual components in Galio to make it look like Argon's Design System, minimalistic and easy to use.
-
-Start your development with a badass Design System for React Native inspired by Argon Design System. If you like Argon's Design System, you will love this react native app template! It features a huge number of components and screens built to fit together and look amazing. 
+EDLIZ clinical reference is the most authoritative and accessible point-of-care medical reference for healthcare professionals, available via all major mobile devices. All content is free. The clinical information represents the expertise and practical knowledge of top physicians and pharmacists from leading academic medical centers in Zimbabwe. 
 
 ## Reporting Issues
 

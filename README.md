@@ -6,7 +6,7 @@ EDLIZ clinical reference is the most authoritative and accessible point-of-care 
 
 ## Reporting Issues
 
-We use GitHub Issues as the official bug tracker for the EDLIZ Mobile App. Here are some advices for our users that want to report an issue:
+We use GitHub Issues as the official bug tracker for the EDLIZ Mobile App. Here is some advice for our users that want to report an issue:
 
 1. Make sure that you are using the latest version of the EDLIZ Mobile App.
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.

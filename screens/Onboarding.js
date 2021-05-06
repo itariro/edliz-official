@@ -81,12 +81,18 @@ const saveAsColumns = (db_table, db_content) => {
 class Onboarding extends React.Component {
   constructor(props) {
     super(props);
+    let bigScreen = false;
+    if ((width >= 1000) && (height >= 1000)) {
+      bigScreen = true;
+    }
+
     this.state = {
       db_version: "",
       latest_db_version: '',
       latest_db_version_url: '',
       update_progress: 'Preparing data...',
-      checkedForUpdate: false
+      checkedForUpdate: false,
+      bigScreen: bigScreen,
     };
     console.log('props...');
   }
@@ -189,7 +195,7 @@ class Onboarding extends React.Component {
               this.state = { update_progress: 'All done...' };
 
               const { navigation } = this.props;
-              navigation.navigate("App")
+              navigation.navigate("App");
 
             })
             .catch(error => {

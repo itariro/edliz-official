@@ -13,14 +13,12 @@ import { Block, Text, theme } from "galio-framework";
 import { Images } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 
-
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 2;
-const thumbMeasureHeight = (width - 48 - 32) / 2.5;
+const thumbMeasureHeight = (width - 48 - 32) / 2;
 
 const thumbMeasureBigScreens = (width - 48 - 32) / 4;
 const thumbMeasureBigScreensHeight = (width - 48 - 32) / 4.5;
-
 
 class Profile extends React.Component {
   constructor(props) {
@@ -38,7 +36,12 @@ class Profile extends React.Component {
     //console.log('h => ' + height);
   }
 
+  _testing() {
+    console.log('working?');
+  }
+
   _handleNavigation = (item, args) => {
+    console.log(item.title);
     if (item.type == 'url') {
       Linking.openURL(item.navigateTo).catch((err) => console.error('An error occurred', err));
     } else {
@@ -52,6 +55,79 @@ class Profile extends React.Component {
     return (
       // let's split between views for iPad and for phones
       <View>
+        {/* for mobile phones */}
+        {!this.state.bigScreen &&
+          <View style={styles.touchable}>
+            <Block flex style={styles.profile}>
+              <Block flex>
+                <ImageBackground
+                  source={Images.ProfileBackground}
+                  style={styles.profileContainer}
+                  imageStyle={styles.profileBackground}
+                >
+                  <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={{ width, marginTop: '20%' }}
+                  >
+                    <Block right style={styles.avatarContainer}>
+                      <Image
+                        source={Images.MoHCCCoatOfArms}
+                        style={styles.avatar}
+                      />
+                      <Text size={12} color="#FFFFFF" style={{ textAlign: "center", marginTop: 0, marginHorizontal: 20, width: 120 }}>
+                        Ministry of Health and Child Care
+                      </Text>
+                    </Block>
+                    <Block left style={styles.nameInfo}>
+                      <Text bold size={30} color="#FFFFFF" style={{ textAlign: "left", marginHorizontal: 16, marginTop: 60, width: 385 }}>
+                        Essential Medicines List and Standard Treatment Guidelines for Zimbabwe
+                      </Text>
+                      <Block style={styles.dividerTitle} />
+                      <Block middle>
+                        <Text
+                          size={13}
+                          color="#FFFFFF"
+                          style={{ textAlign: "left", marginTop: 5, marginHorizontal: 16, width: 380 }}
+                        >
+                          The authoritative point-of-care medical reference for healthcare professionals in Zimbabwe.
+                    </Text>
+                      </Block>
+                    </Block>
+                    <Block flex style={styles.profileCard}>
+                      {/* <Block middle style={styles.avatarContainer}>
+                  <Image
+                    source={{ uri: Images.ProfilePicture }}
+                    style={styles.avatar}
+                  />
+                </Block> */}
+                      <Block flex>
+                        <Block row space="between"></Block>
+                        <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
+                          <Block row space="between" style={{ flexWrap: "wrap" }}>
+                            {Images.MainMenu.map((img, imgIndex) => (
+                              <Block key={`viewed-${img.id}`} style={styles.thumb}>
+                                <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
+                                  <Image
+                                    key={img.id}
+                                    source={img.icon}
+                                    style={{ alignSelf: 'center', marginTop: 10, height: 40, width: 40 }}
+                                  />
+                                  <Text bold size={16} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginHorizontal: 4 }} onPress={() => this._testing()}>{img.title}</Text>
+                                  <Text muted size={12} style={{ textAlign: 'center', marginTop: 4, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
+                                </TouchableOpacity>
+                              </Block>
+                            ))}
+                          </Block>
+                        </Block>
+                      </Block>
+                    </Block>
+                  </ScrollView>
+                </ImageBackground>
+              </Block>
+            </Block>
+          </View>
+        }
+
         {/* for tabs iPad etc */}
         {this.state.bigScreen &&
           <View>
@@ -78,7 +154,7 @@ class Profile extends React.Component {
                     <Block left style={styles.nameInfo}>
                       <Text bold size={46} color="#FFFFFF" style={{ textAlign: "left", marginHorizontal: 16, width: 700 }}>
                         Essential Medicines List and Standard Treatment Guidelines for Zimbabwe
-                     </Text>
+                      </Text>
                       <Block style={styles.dividerBigScreenTitle} />
                       <Block middle>
                         <Text
@@ -88,7 +164,6 @@ class Profile extends React.Component {
                         >
                           The authoritative point-of-care medical reference for healthcare professionals in Zimbabwe.
                     </Text>
-
                       </Block>
                     </Block>
                     <Block flex style={styles.profileCard}>
@@ -111,7 +186,7 @@ class Profile extends React.Component {
                           <Text bold size={17} color="#525F7F" style={styles.title}>Reference</Text>
                           <Block row space="between" style={{ flexWrap: "wrap" }}>
                             {Images.MainMenuRefence.map((img, imgIndex) => (
-                              <Block key={`viewed-${img}`} style={styles.thumbBigScreens}>
+                              <Block key={`viewed-${img.id}`} style={styles.thumbBigScreens}>
                                 <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
                                   <Image
                                     key={img.id}
@@ -128,7 +203,7 @@ class Profile extends React.Component {
                           <Text bold size={17} color="#525F7F" style={styles.title}>Tools and Resources</Text>
                           <Block row space="between" style={{ flexWrap: "wrap" }}>
                             {Images.MainMenuTools.map((img, imgIndex) => (
-                              <Block key={`viewed-${img}`} style={styles.thumbBigScreens}>
+                              <Block key={`viewed-${img.id}`} style={styles.thumbBigScreens}>
                                 <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
                                   <Image
                                     key={img.id}
@@ -145,7 +220,7 @@ class Profile extends React.Component {
                           <Text bold size={17} color="#525F7F" style={styles.title}>Support and Feedback</Text>
                           <Block row space="between" style={{ flexWrap: "wrap" }}>
                             {Images.MainMenuSupport.map((img, imgIndex) => (
-                              <Block key={`viewed-${img}`} style={styles.thumbBigScreens}>
+                              <Block key={`viewed-${img.id}`} style={styles.thumbBigScreens}>
                                 <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
                                   <Image
                                     key={img.id}
@@ -159,86 +234,6 @@ class Profile extends React.Component {
                             ))}
                           </Block>
 
-                        </Block>
-                      </Block>
-                    </Block>
-                  </ScrollView>
-                </ImageBackground>
-              </Block>
-            </Block>
-          </View>
-        }
-
-        {/* for mobile phones */}
-        {!this.state.bigScreen &&
-          <View>
-            <Block flex style={styles.profile}>
-              <Block flex>
-                <ImageBackground
-                  source={Images.ProfileBackground}
-                  style={styles.profileContainer}
-                  imageStyle={styles.profileBackground}
-                >
-                  <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    style={{ width, marginTop: '25%' }}
-                  >
-                    <Block middle style={styles.avatarContainer}>
-                      <Image
-                        source={Images.MoHCCCoatOfArms}
-                        style={styles.avatar}
-                      />
-                    </Block>
-                    <Block middle style={styles.nameInfo}>
-                      <Text size={14} color="#FFFFFF" style={{ marginTop: 0 }}>
-                        Ministry of Health and Child Care
-                </Text>
-                      <Text bold size={27} color="#FFFFFF" style={{ textAlign: "center", marginHorizontal: 8 }}>
-                        Essential Medicines List and Standard Treatment Guidelines for Zimbabwe
-                </Text>
-
-                    </Block>
-                    <Block flex style={styles.profileCard}>
-                      {/* <Block middle style={styles.avatarContainer}>
-                  <Image
-                    source={{ uri: Images.ProfilePicture }}
-                    style={styles.avatar}
-                  />
-                </Block> */}
-                      <Block flex>
-                        <Block middle>
-                          <Text
-                            size={15}
-                            color="#525F7F"
-                            style={{ textAlign: "center", marginTop: 20 }}
-                          >
-                            The authoritative point-of-care medical reference for healthcare professionals in Zimbabwe.
-                    </Text>
-
-                        </Block>
-                        <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
-                          <Block style={styles.divider} />
-                        </Block>
-                        <Block
-                          row
-                          space="between"
-                        >
-                        </Block>
-                        <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-                          <Block row space="between" style={{ flexWrap: "wrap" }}>
-                            {Images.MainMenu.map((img, imgIndex) => (
-                              <Block key={`viewed-${img}`} style={styles.thumb}>
-                                <TouchableOpacity key={img.id} onPress={() => this._handleNavigation(img, '')}>
-                                  <Image
-                                    key={img.id}
-                                    source={img.icon}
-                                    style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
-                                  />
-                                  <Text bold size={18} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 8, marginHorizontal: 4 }}>{img.title}</Text>
-                                </TouchableOpacity>
-                              </Block>
-                            ))}
-                          </Block>
                         </Block>
                       </Block>
                     </Block>
@@ -258,7 +253,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
     // marginBottom: -HeaderHeight * 2,
     flex: 1,
-    backgroundColor: theme.COLORS.GREY,
+    backgroundColor: '#e0e0e0',
   },
   profileContainer: {
     width: width,
@@ -295,14 +290,15 @@ const styles = StyleSheet.create({
     marginTop: -80
   },
   avatar: {
-    width: 97,
-    height: 140,
-    marginTop: height / 7
+    width: 65,
+    height: 100,
+    marginTop: height / 8,
+    marginEnd: 45
   },
   avatarBigScreen: {
     width: 97,
     height: 140,
-    marginTop: height / 7,
+    marginTop: height / 6.8,
     marginEnd: 45
   },
   nameInfo: {
@@ -325,6 +321,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 20
   },
+  dividerTitle: {
+    width: 350,
+    borderWidth: 0.5,
+    borderColor: "#FFFFFF",
+    marginTop: 5,
+    marginLeft: 20
+  },
   thumb: {
     borderRadius: 4,
     marginVertical: 4,
@@ -345,6 +348,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginTop: height / 8
+  },
+  touchable: {
+    flex: 1,
   },
 });
 

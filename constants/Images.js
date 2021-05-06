@@ -37,10 +37,10 @@ const Viewed = [
 
 //menu 
 const MainMenu = [
-  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Monographs for prescription and OTC medicine, herbals, and supplements', 'navigateTo': 'MedicineCategories' },
-  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Comprehensively answer clinical questions on diseases and conditions', 'navigateTo': 'DiseaseConditions' },
-  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'Resources' },
-  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of medicine, disease and condition information', 'navigateTo': 'GlobalSearch' }
+  { 'id': 0, 'icon': icon_medicines, 'title': 'Medicines', 'description': 'Monographs for prescription and OTC medicine, herbals, and supplements', 'navigateTo': 'MedicineCategories', 'type': 'page' },
+  { 'id': 1, 'icon': icon_infections, 'title': 'Diseases and Conditions', 'description': 'Comprehensively answer clinical questions on diseases and conditions', 'navigateTo': 'DiseaseConditions', 'type': 'page' },
+  { 'id': 2, 'icon': icon_settings, 'title': 'Tools and Resources', 'description': 'Tools and guides to help with measurements, calculations and standards', 'navigateTo': 'Resources', 'type': 'page' },
+  { 'id': 3, 'icon': icon_resources, 'title': 'Smart Search', 'description': 'Quickly dig through thousands of medicine, disease and condition information', 'navigateTo': 'GlobalSearch', 'type': 'page' }
 ];
 
 const MainMenuRefence = [

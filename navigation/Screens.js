@@ -1,5 +1,6 @@
 import React from "react";
 import { Easing, Animated, Dimensions } from "react-native";
+import * as Device from 'expo-device';
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -8,6 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Block, theme } from "galio-framework";
 
 // screens
+import DeviceProfiler from "../screens/DeviceProfiler";
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
 import Pro from "../screens/Articles";
@@ -49,7 +51,6 @@ import CustomDrawerContent from "./Menu";
 import { Icon, Header } from "../components";
 import { argonTheme, tabs } from "../constants";
 
-//const { width } = Dimensions.get("screen");
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
@@ -534,7 +535,21 @@ export default function OnboardingStack(props) {
   );
 }
 
+function getDeviceType() {
+  let screenToDisplay = 'Profile';
+  const { width, height } = Dimensions.get("screen");
+  if ((width >= 1000) && (height >= 1000)) {
+    // tablet
+    screenToDisplay = 'Profile';
+  } else {
+    // phone
+    screenToDisplay = 'Home';
+  }
+  return screenToDisplay;
+}
+
 function AppStack(props) {
+  console.log(getDeviceType());
   return (
     <Drawer.Navigator
       style={{ flex: 1 }}

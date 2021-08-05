@@ -60,8 +60,8 @@ const MainMenuTools = [
 const MainMenuSupport = [
   { 'id': 0, 'icon': feedback, 'title': 'Reporting an Adverse Medicine Reaction', 'description': 'Use this tool to submit a report an Adverse Drug Reaction', 'navigateTo': 'https://e-pv.mcaz.co.zw/', 'type': 'url' },
   { 'id': 1, 'icon': update, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Update', 'type': 'page' },
-  { 'id': 2, 'icon': terms, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' },
-  { 'id': 3, 'icon': feedback, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz', 'type': 'url' }
+  { 'id': 2, 'icon': terms, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz/support.php', 'type': 'url' },
+  { 'id': 3, 'icon': feedback, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'https://www.padendere.co.zw/edliz/support.php', 'type': 'url' }
 ];
 
 const Products = {

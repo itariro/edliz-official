@@ -101,7 +101,7 @@ class Onboarding extends React.Component {
     console.log('checking...');
     this.state = { update_progress: 'Checking for updates' };
     // check for updates
-    fetch('https://padendere.co.zw/edlizadmin/api/v1/index.php?version')
+    fetch('https://www.padendere.co.zw/edlizadmin/api/v1/index.php?version')
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson.version[0].db_version);
@@ -111,7 +111,7 @@ class Onboarding extends React.Component {
           console.log('get the latest then');
           this.state = { update_progress: 'Fetching updates...' };
           // get the actual latest content
-          fetch("https://padendere.co.zw/edlizadmin/" + latestVersionURL)
+          fetch("https://www.padendere.co.zw/edlizadmin/" + latestVersionURL)
             .then(response => response.json())
             .then(responseContentJson => {
               console.log('got it all, now lets save to local DB');
@@ -294,14 +294,14 @@ class Onboarding extends React.Component {
           <Block flex space="around" style={{ zIndex: 2 }}>
             <Block style={styles.title}>
               <Block>
-                <Text bold size={32} color="#FFFFFF">
+                <Text bold size={32} color="#525F7F">
                   {this.state.update_progress}
                 </Text>
               </Block>
               <Block style={styles.subTitle}>
-                <Text color="white" size={15}>
+                <Text color="#525F7F" size={15}>
                   We constantly check for updates on the EDLIZ server to keep the content you access up-to-date. The process takes place in the background and may take a few minutes, once completed, we will display the home page.
-                  </Text>
+                </Text>
               </Block>
             </Block>
             <Block center>

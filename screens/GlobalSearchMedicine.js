@@ -174,21 +174,45 @@ class GlobalSearchMedicine extends React.Component {
       // Flat List Item
       <View>
         <Text bold size={18} style={styles.title} onPress={() => {
-          db.transaction(tx => {
-            tx.executeSql('SELECT title, content FROM tbl_sub_condition_rows WHERE condition_id = ?', [item.id],
-              (txObj, { rows }) => {
-                if (rows.length > 0) {
-                  console.log(rows.item(0).title);
-                  // this.props.navigation.push("DiseaseConditionDetail", {
-                  //   condition_id: item.id,
-                  //   condition_title: item.title,
-                  //   condition_content: item.content,
-                  //   condition_category: 'Diseases and Conditions',
-                  // });
+          console.log('selected => ' + item.title);
+
+          // get the drug detail
+          db.transaction((tx) => {
+            tx.executeSql("select content from tbl_drug", [], (_, { rows }) => {
+              if (rows.length > 0) {
+                let contentItem = JSON.parse(rows.item(0).content);
+                contentItem = contentItem.tbl_drug;
+                for (var i = 0; i < contentItem.length; i++) {
+                  let drugItem = contentItem[i];
+                  let selected_title = contentItem[i].title.replace(/\+/g, " ");
+                  selected_title = unescape(selected_title).trim();
+                  if (selected_title == item.title) {
+                    console.log('found');
+
+                    // let's get the category
+                    console.log(contentItem[i].category_id);
+                    let category = 'Other';
+                    db.transaction((tx) => {
+                      tx.executeSql("select content from tbl_drug_category", [], (_, { rows }) => {
+                        if (rows.length > 0) {
+                          let contentCategoryItem = JSON.parse(rows.item(0).content);
+                          contentCategoryItem = contentCategoryItem.tbl_drug_category;
+                          for (var i = 0; i < contentCategoryItem.length; i++) {
+                            if (contentCategoryItem[i].id == contentItem[i].category_id) {
+                              category = contentCategoryItem[i].title;
+                              break;
+                            }
+                          }
+                        }
+                        console.log(category);
+                        this._handleNavigation(drugItem, category);
+                      });
+                    });
+                    break;
+                  }
                 }
-              },
-              (txObj, error) => console.log('Error ', error)
-            )
+              }
+            });
           });
         }}>
           {item.title}
@@ -208,6 +232,13 @@ class GlobalSearchMedicine extends React.Component {
         }}
       />
     );
+  }
+
+  _handleNavigation = (args, category) => {
+    this.props.navigation.push("MedicineDetail", {
+      medicine: args,
+      category: category
+    });
   }
 
   render() {

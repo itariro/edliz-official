@@ -14,7 +14,7 @@ const { width } = Dimensions.get('screen');
 
 let menuItem = [
   { 'id': 0, 'title': 'Check for Updates', 'description': 'Update your data to the latest version from the updated EDLIZ digial files', 'navigateTo': 'Onboarding' },
-  { 'id': 1, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz' },
+  { 'id': 1, 'title': 'Terms and Conditions', 'description': 'View our Terms and Conditions of Service', 'navigateTo': 'https://www.padendere.co.zw/edliz/support.php' },
   { 'id': 2, 'title': 'Send us Feedback', 'description': 'Have any queries, comments, suggestions or questions?', 'navigateTo': 'Calculators' }
 ];
 

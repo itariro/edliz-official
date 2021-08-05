@@ -25,7 +25,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     //setting default state
-    if ((width >= 1000) || (height >= 1000)) {
+    if ((width >= 1000) && (height >= 1000)) {
       this.state = { bigScreen: true };
     } else {
       this.state = { bigScreen: false };
@@ -33,8 +33,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    console.log('w => ' + width);
-    console.log('h => ' + height);
+    //console.log('w => ' + width);
+    //console.log('h => ' + height);
   }
 
   _handleNavigation = (item, args) => {
@@ -51,7 +51,7 @@ class Profile extends React.Component {
   ItemView = ({ item }) => {
     const summary = item.title_count + item.content_count + ' matches found';
     return (
-      <View style={styles.menu_item} onPress={() => {
+      <View onPress={() => {
         this._handleNavigation(item, '');
       }}>
         <Image
@@ -85,17 +85,18 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <View>
-        {/* for tabs iPad etc */}
-        {this.state.bigScreen &&
-          <ScrollView>
+      // let's split between views for iPad and for phones
+      <ScrollView horizontal={true}>
+        <View>
+          {/* for tabs iPad etc */}
+          {this.state.bigScreen &&
             <View>
               <Block flex style={styles.profile}>
                 <Block flex>
                   <ImageBackground
                     source={Images.ProfileBackground}
-                    style={styles.profileContainerTab}
-                    imageStyle={styles.profileBackgroundTab}
+                    style={styles.profileContainer}
+                    imageStyle={styles.profileBackground}
                   >
                     <ScrollView
                       horizontal={false}
@@ -127,7 +128,7 @@ class Profile extends React.Component {
 
                         </Block>
                       </Block>
-                      <Block flex style={styles.profileCardTab}>
+                      <Block flex style={styles.profileCard}>
                         {/* <Block middle style={styles.avatarContainer}>
                   <Image
                     source={{ uri: Images.ProfilePicture }}
@@ -136,14 +137,15 @@ class Profile extends React.Component {
                 </Block> */}
                         <Block flex>
 
+
                           <Block
                             row
                             space="between"
                           >
                           </Block>
-                          <Block style={{ paddingBottom: -HeaderHeight, marginTop: 5 }}>
+                          <Block style={{ paddingBottom: -HeaderHeight * 2, marginTop: 10 }}>
 
-                            <Text bold size={17} color="#525F7F" style={styles.title, { marginTop: 5 }}>Reference</Text>
+                            <Text bold size={17} color="#525F7F" style={styles.title}>Reference</Text>
                             <Block row space="between" style={{ flexWrap: "wrap" }}>
                               {Images.MainMenuRefence.map((img, imgIndex) => (
                                 <Block key={`viewed-${imgIndex}`} style={styles.thumbBigScreens}>
@@ -151,16 +153,16 @@ class Profile extends React.Component {
                                     <Image
                                       key={imgIndex}
                                       source={img.icon}
-                                      style={{ alignSelf: 'center', marginTop: 20, height: 42, width: 42 }}
+                                      style={{ alignSelf: 'center', marginTop: 20, height: 48, width: 48 }}
                                     />
-                                    <Text bold size={15} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
-                                    <Text muted size={13} style={{ textAlign: 'center', height: 52, marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
+                                    <Text bold size={17} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
+                                    <Text muted size={14} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
                                   </TouchableOpacity>
                                 </Block>
                               ))}
                             </Block>
 
-                            <Text bold size={17} color="#525F7F" style={styles.title, { marginTop: 10 }}>Tools and Resources</Text>
+                            <Text bold size={17} color="#525F7F" style={styles.title}>Tools and Resources</Text>
                             <Block row space="between" style={{ flexWrap: "wrap" }}>
                               {Images.MainMenuTools.map((img, imgIndex) => (
                                 <Block key={`viewed-${imgIndex}`} style={styles.thumbBigScreens}>
@@ -168,16 +170,16 @@ class Profile extends React.Component {
                                     <Image
                                       key={imgIndex}
                                       source={img.icon}
-                                      style={{ alignSelf: 'center', marginTop: 30, height: 42, width: 42 }}
+                                      style={{ alignSelf: 'center', marginTop: 30, height: 64, width: 64 }}
                                     />
-                                    <Text bold size={15} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
-                                    <Text muted size={13} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
+                                    <Text bold size={17} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
+                                    <Text muted size={14} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
                                   </TouchableOpacity>
                                 </Block>
                               ))}
                             </Block>
 
-                            <Text bold size={17} color="#525F7F" style={styles.title, { marginTop: 10 }}>Support and Feedback</Text>
+                            <Text bold size={17} color="#525F7F" style={styles.title}>Support and Feedback</Text>
                             <Block row space="between" style={{ flexWrap: "wrap" }}>
                               {Images.MainMenuSupport.map((img, imgIndex) => (
                                 <Block key={`viewed-${imgIndex}`} style={styles.thumbBigScreens}>
@@ -185,10 +187,10 @@ class Profile extends React.Component {
                                     <Image
                                       key={imgIndex}
                                       source={img.icon}
-                                      style={{ alignSelf: 'center', marginTop: 30, height: 42, width: 42 }}
+                                      style={{ alignSelf: 'center', marginTop: 30, height: 64, width: 64 }}
                                     />
-                                    <Text bold size={15} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
-                                    <Text muted size={13} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
+                                    <Text bold size={17} color="#525F7F" style={{ textAlign: 'center', marginTop: 8, marginBottom: 2, marginHorizontal: 8 }}>{img.title}</Text>
+                                    <Text muted size={14} style={{ textAlign: 'center', marginTop: 0, marginBottom: 8, marginHorizontal: 8.5 }}>{img.description}</Text>
                                   </TouchableOpacity>
                                 </Block>
                               ))}
@@ -202,51 +204,16 @@ class Profile extends React.Component {
                 </Block>
               </Block>
             </View>
-          </ScrollView>
-        }
+          }
 
-        {/* for mobile phones */}
-        {!this.state.bigScreen &&
-          <View>
-            <FlatList
-              ListHeaderComponent={
-                <>
-                  <View>
-                    <ImageBackground
-                      source={Images.ProfileBackground}
-                      style={styles.profileContainer}
-                      imageStyle={styles.profileBackground}
-                    >
-                      <Block middle style={styles.avatarContainer}>
-                        <Image
-                          source={Images.MoHCCCoatOfArms}
-                          style={styles.avatar}
-                        />
-                      </Block>
-                      <Block middle style={styles.nameInfo}>
-                        <Text size={14} color="#525F7F" style={{ marginTop: 0 }}>
-                          Ministry of Health and Child Care
-                        </Text>
-                        <Text bold size={27} color="#525F7F" style={{ textAlign: "center", marginHorizontal: 8 }}>
-                          Essential Medicines List and Standard Treatment Guidelines for Zimbabwe
-                        </Text>
-                        <Text size={14} color="#525F7F" style={{ marginTop: 0 }}>
-                          8th Edition
-                        </Text>
-                      </Block>
-                    </ImageBackground>
-                  </View>
-                </>}
-              data={Images.MainMenu}
-              keyExtractor={(data, index) => index.toString()}
-              ItemSeparatorComponent={this.ItemSeparatorView}
-              renderItem={this.ItemView}
-              ListFooterComponent={
-                <View></View>
-              } />
-          </View>
-        }
-      </View>
+          {/* for mobile phones */}
+          {!this.state.bigScreen &&
+            <View>
+              
+            </View>
+          }
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -258,49 +225,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.COLORS.GREY,
   },
-  profileContainerTab: {
+  profileContainer: {
     width: width,
     height: height,
     padding: 0,
     zIndex: 1,
     top: 0
   },
-  profileBackgroundTab: {
-    width: width,
-    height: height / 2
-  },
-  profileContainer: {
-    width: width,
-    height: height / 2.3,
-    padding: 0,
-    zIndex: 1,
-    top: 0
-  },
   profileBackground: {
     width: width,
-    height: height / 2.4
+    height: height / 1.5
   },
   profileCard: {
     // position: "relative",
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
     marginTop: 20,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    borderBottomEndRadius: 6,
-    borderBottomStartRadius: 6,
-    backgroundColor: theme.COLORS.WHITE,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 8,
-    shadowOpacity: 0.2,
-    zIndex: 2
-  },
-  profileCardTab: {
-    // position: "relative",
-    padding: theme.SIZES.BASE,
-    marginHorizontal: theme.SIZES.BASE,
-    marginTop: 50,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     borderBottomEndRadius: 6,
@@ -393,10 +333,6 @@ const styles = StyleSheet.create({
     marginEnd: 35,
     marginTop: 20,
   },
-  menu_item: {
-    marginStart: 16,
-    marginEnd: 16,
-  }
 });
 
 export default Profile;

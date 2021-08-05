@@ -23,6 +23,7 @@ class SupplierDetail extends React.Component {
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 100 }}>
         <Text
+            bold size={27}
             h4
             style={{ marginBottom: theme.SIZES.BASE / 2 }}
             color={argonTheme.COLORS.DEFAULT}
@@ -34,6 +35,7 @@ class SupplierDetail extends React.Component {
           <Text bold size={16} style={styles.title}>Registration Number</Text>
           <Text
             p
+            size={15}
             style={{ marginBottom: 16 }}
             color={argonTheme.COLORS.DEFAULT}
           >
@@ -43,6 +45,7 @@ class SupplierDetail extends React.Component {
           <Text bold size={16} style={styles.title}>VAT Number</Text>
           <Text
             p
+            size={15}
             style={{ marginBottom: 16 }}
             color={argonTheme.COLORS.DEFAULT}
           >
@@ -52,6 +55,7 @@ class SupplierDetail extends React.Component {
           <Text bold size={16} style={styles.title}>Address</Text>
           <Text
             p
+            size={15}
             style={{ marginBottom: 16 }}
             color={argonTheme.COLORS.DEFAULT}
           >
@@ -61,6 +65,7 @@ class SupplierDetail extends React.Component {
           <Text bold size={16} style={styles.title}>Contact Number</Text>
           <Text
             p
+            size={15}
             style={{ marginBottom: 16 }}
             color={argonTheme.COLORS.DEFAULT}
           >

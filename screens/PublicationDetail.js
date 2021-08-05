@@ -22,7 +22,7 @@ class PublicationDetail extends React.Component {
     return (
       <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, marginTop: 100 }}>
-          <Text
+          <Text bold size={27}
             h4
             style={{ marginBottom: theme.SIZES.BASE / 2 }}
             color={argonTheme.COLORS.DEFAULT}
